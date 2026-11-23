@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anyday Apparel Tracker</title>
+<meta name="theme-color" content="#0E5C48">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Anyday">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<style>
+:root{
+  --green:#0E5C48; --green-d:#0a4636; --green-l:#d7e4d6;
+  --cream:#EBE8D5; --cream-l:#f5f3e6; --paper:#fbfaf2;
+  --ink:#16302a; --muted:#6b7a72; --line:#d9d5bd;
+  --red:#b3412f; --amber:#b9791a; --radius:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--cream);color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px}
+body{min-height:100vh;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:20;background:var(--cream);
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;
+  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+header img{height:34px;display:block}
+header .date{font-size:12px;color:var(--muted);text-align:right;line-height:1.3}
+main{padding:16px;max-width:640px;margin:0 auto}
+section.tab{display:none}
+section.tab.active{display:block}
+h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;font-weight:700}
+.seg{display:flex;background:var(--cream-l);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;padding:9px 4px;border-radius:9px;font:inherit;font-size:14px;color:var(--muted);font-weight:600}
+.seg button.on{background:var(--green);color:var(--cream)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.card .lbl{font-size:12px;color:var(--muted);font-weight:600}
+.card .val{font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-.01em;word-break:break-word}
+.card.hero{grid-column:1/-1;background:var(--green);border-color:var(--green);color:var(--cream)}
+.card.hero .lbl{color:#bfd3c7}
+.card.hero .val{font-size:32px}
+.neg{color:var(--red)} .hero .neg{color:#ffb3a4}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.row .main{flex:1;min-width:0}
+.row .t{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .s{font-size:13px;color:var(--muted);margin-top:2px}
+.row .amt{font-weight:800;text-align:right;white-space:nowrap}
+.row .amt small{display:block;font-weight:600;font-size:12px;color:var(--muted)}
+.pos{color:var(--green)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--green-l);color:var(--green-d);margin-left:6px;vertical-align:middle}
+.tag.warn{background:#f6e3c0;color:#7a4d06}
+.tag.out{background:#f3d3cc;color:#8a2a1a}
+.empty{text-align:center;color:var(--muted);padding:28px 10px;font-size:14px;background:var(--paper);border:1px dashed var(--line);border-radius:14px}
+.btn{border:0;background:var(--green);color:var(--cream);font:inherit;font-weight:700;padding:13px 18px;border-radius:12px;width:100%}
+.btn.ghost{background:var(--cream-l);color:var(--green);border:1px solid var(--line)}
+.btn.danger{background:#f3d3cc;color:#8a2a1a}
+.btn + .btn{margin-top:10px}
+.fab{position:fixed;right:18px;bottom:calc(86px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;
+  border:0;background:var(--green);color:var(--cream);font-size:32px;line-height:1;box-shadow:0 6px 18px rgba(14,92,72,.35);z-index:15}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);
+  display:flex;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;border:0;background:transparent;padding:9px 0 8px;font:inherit;font-size:11px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--green)}
+.sheet-bg{position:fixed;inset:0;background:rgba(10,30,24,.45);z-index:40;display:none;align-items:flex-end;justify-content:center}
+.sheet-bg.open{display:flex}
+.sheet{background:var(--cream);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 14px;font-size:20px}
+label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.05em}
+input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:11px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-color:var(--green)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.total{margin:16px 0 4px;padding:12px 14px;background:var(--green-l);border-radius:12px;display:flex;justify-content:space-between;font-weight:800;color:var(--green-d)}
+.sheet .actions{margin-top:16px}
+.chart{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:12px 12px 8px}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:4px;font-weight:600}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.search{margin-bottom:10px}
+.note{font-size:13px;color:var(--muted);line-height:1.5}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--cream);
+  padding:10px 16px;border-radius:99px;font-size:14px;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="icons/logo-full.png" alt="Anyday Apparel">
+  <div class="date" id="today"></div>
+</header>
+
+<main>
+  <!-- DASHBOARD -->
+  <section class="tab active" id="tab-home">
+    <div class="seg" id="range">
+      <button data-r="today">Today</button>
+      <button data-r="week">Week</button>
+      <button data-r="month" class="on">Month</button>
+      <button data-r="all">All</button>
+    </div>
+    <div class="cards" id="cards"></div>
+
+    <h2>Last 7 days</h2>
+    <div class="chart" id="chart"></div>
+
+    <h2>Needs restocking</h2>
+    <div class="list" id="lowstock"></div>
+
+    <h2>Recent activity</h2>
+    <div class="list" id="recent"></div>
+  </section>
+
+  <!-- SALES -->
+  <section class="tab" id="tab-sales">
+    <h2 style="margin-top:4px">Sales</h2>
+    <input class="search" id="q-sales" type="search" placeholder="Search sales…">
+    <div class="list" id="sales-list"></div>
+  </section>
+
+  <!-- EXPENSES -->
+  <section class="tab" id="tab-exp">
+    <h2 style="margin-top:4px">Expenses</h2>
+    <input class="search" id="q-exp" type="search" placeholder="Search expenses…">
+    <div class="list" id="exp-list"></div>
+  </section>
+
+  <!-- INVENTORY -->
+  <section class="tab" id="tab-inv">
+    <h2 style="margin-top:4px">Inventory</h2>
+    <input class="search" id="q-inv" type="search" placeholder="Search products…">
+    <div class="list" id="inv-list"></div>
+  </section>
+
+  <!-- MORE -->
+  <section class="tab" id="tab-more">
+    <h2 style="margin-top:4px">Backup</h2>
+    <p class="note">Your data lives only on this phone. Save a backup file once in a while (and before clearing browser data or changing phones).</p>
+    <button class="btn" id="b-export">Save backup file</button>
+    <button class="btn ghost" id="b-import">Restore from backup file</button>
+    <input type="file" id="f-import" accept="application/json,.json" hidden>
+
+    <h2>Reports</h2>
+    <button class="btn ghost" id="b-csv-sales">Download sales (CSV)</button>
+    <button class="btn ghost" id="b-csv-exp">Download expenses (CSV)</button>
+
+    <h2>Settings</h2>
+    <label for="cur">Currency symbol</label>
+    <input id="cur" maxlength="4">
+
+    <h2>Danger zone</h2>
+    <button class="btn danger" id="b-clear">Erase all data</button>
+    <p class="note" style="margin-top:18px">Anyday Apparel Tracker · works offline · no account, no fees.</p>
+  </section>
+</main>
+
+<button class="fab" id="fab" aria-label="Add">+</button>
+
+<nav>
+  <button data-t="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Home</button>
+  <button data-t="sales"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Sales</button>
+  <button data-t="exp"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h3"/></svg>Expenses</button>
+  <button data-t="inv"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>Stock</button>
+  <button data-t="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</button>
+</nav>
+
+<div class="sheet-bg" id="sheet-bg"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- storage ---------- */
+var KEY = 'anyday_tracker_v1';
+var db = load();
+
+function blank(){ return {products:[], sales:[], expenses:[], settings:{currency:'₱'}}; }
+function load(){
+  try{
+    var d = JSON.parse(localStorage.getItem(KEY));
+    if(d && d.products && d.sales && d.expenses){ d.settings = d.settings || {currency:'₱'}; return d; }
+  }catch(e){}
+  return blank();
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(db)); }
+  catch(e){ toast('Could not save – storage is full or blocked'); }
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+/* ---------- helpers ---------- */
+function $(s,r){ return (r||document).querySelector(s); }
+function $$(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function cur(){ return db.settings.currency || '₱'; }
+function money(n){
+  n = Number(n)||0;
+  var neg = n<0; n = Math.abs(n);
+  var s = n.toLocaleString('en-US',{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2});
+  return (neg?'-':'') + cur() + s;
+}
+function num(v){ var n = parseFloat(v); return isNaN(n)?0:n; }
+function pad(n){ return n<10?'0'+n:''+n; }
+function iso(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function todayISO(){ return iso(new Date()); }
+function parse(s){ var p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+function prettyDate(s){ return parse(s).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}); }
+function toast(msg){
+  var t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove('show');},2200);
+}
+function startOf(range){
+  var d = new Date(); d.setHours(0,0,0,0);
+  if(range==='today') return iso(d);
+  if(range==='week'){ var wd=(d.getDay()+6)%7; d.setDate(d.getDate()-wd); return iso(d); } // Monday
+  if(range==='month'){ d.setDate(1); return iso(d); }
+  return '0000-00-00';
+}
+function saleTotal(s){ return s.qty * s.price; }
+function saleProfit(s){ return s.qty * (s.price - (s.cost||0)); }
+function sortDesc(arr){ return arr.slice().sort(function(a,b){ return a.date<b.date?1:a.date>b.date?-1:(a.id<b.id?1:-1); }); }
+
+/* ---------- navigation ---------- */
+var tab = 'home', range = 'month';
+function go(t){
+  tab = t;
+  $$('section.tab').forEach(function(s){ s.classList.toggle('active', s.id==='tab-'+t); });
+  $$('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.t===t); });
+  $('#fab').style.display = (t==='more') ? 'none' : 'block';
+  window.scrollTo(0,0);
+  render();
+}
+$$('nav button').forEach(function(b){ b.onclick=function(){ go(b.dataset.t); }; });
+$$('#range button').forEach(function(b){
+  b.onclick=function(){
+    range=b.dataset.r;
+    $$('#range button').forEach(function(x){ x.classList.toggle('on', x===b); });
+    renderHome();
+  };
+});
+$('#fab').onclick=function(){
+  if(tab==='exp') openExpense();
+  else if(tab==='inv') openProduct();
+  else openSale();
+};
+['q-sales','q-exp','q-inv'].forEach(function(id){ $('#'+id).oninput=render; });
+
+/* ---------- rendering ---------- */
+function render(){
+  $('#today').innerHTML = new Date().toLocaleDateString('en-PH',{weekday:'long'}) + '<br>' +
+    new Date().toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
+  if(tab==='home') renderHome();
+  if(tab==='sales') renderSales();
+  if(tab==='exp') renderExpenses();
+  if(tab==='inv') renderInventory();
+  if(tab==='more') $('#cur').value = cur();
+}
+
+function renderHome(){
+  var from = startOf(range);
+  var S = db.sales.filter(function(s){return s.date>=from;});
+  var E = db.expenses.filter(function(e){return e.date>=from;});
+  var rev = S.reduce(function(a,s){return a+saleTotal(s);},0);
+  var gross = S.reduce(function(a,s){return a+saleProfit(s);},0);
+  var exp = E.reduce(function(a,e){return a+e.amount;},0);
+  var net = gross - exp;
+  var units = S.reduce(function(a,s){return a+s.qty;},0);
+  $('#cards').innerHTML =
+    '<div class="card hero"><div class="lbl">Net profit (after expenses)</div><div class="val '+(net<0?'neg':'')+'">'+money(net)+'</div></div>'+
+    '<div class="card"><div class="lbl">Sales</div><div class="val">'+money(rev)+'</div></div>'+
+    '<div class="card"><div class="lbl">Expenses</div><div class="val">'+money(exp)+'</div></div>'+
+    '<div class="card"><div class="lbl">Gross profit</div><div class="val">'+money(gross)+'</div></div>'+
+    '<div class="card"><div class="lbl">Items sold</div><div class="val">'+units+'</div></div>';
+
+  renderChart();
+
+  var low = db.products.filter(function(p){ return p.stock <= p.low; })
+    .sort(function(a,b){return a.stock-b.stock;});
+  $('#lowstock').innerHTML = low.length ? low.slice(0,6).map(function(p){
+    return '<div class="row" data-open-prod="'+p.id+'"><div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+'</div>'+
+      '<div class="s">'+(p.stock<=0?'<span class="tag out">Out of stock</span>':'<span class="tag warn">Low: '+p.stock+' left</span>')+'</div></div></div>';
+  }).join('') : '<div class="empty">Nothing running low 👍</div>';
+
+  var items = [];
+  db.sales.forEach(function(s){ items.push({k:'s',d:s.date,id:s.id,o:s}); });
+  db.expenses.forEach(function(e){ items.push({k:'e',d:e.date,id:e.id,o:e}); });
+  items.sort(function(a,b){ return a.d<b.d?1:a.d>b.d?-1:(a.id<b.id?1:-1); });
+  $('#recent').innerHTML = items.length ? items.slice(0,6).map(function(it){
+    if(it.k==='s') return '<div class="row"><div class="main"><div class="t">'+esc(it.o.name)+' ×'+it.o.qty+'</div><div class="s">'+prettyDate(it.o.date)+' · '+esc(it.o.method)+'</div></div><div class="amt pos">+'+money(saleTotal(it.o))+'</div></div>';
+    return '<div class="row"><div class="main"><div class="t">'+esc(it.o.category)+'</div><div class="s">'+prettyDate(it.o.date)+(it.o.note?' · '+esc(it.o.note):'')+'</div></div><div class="amt neg">-'+money(it.o.amount)+'</div></div>';
+  }).join('') : '<div class="empty">No activity yet.<br>Tap <b>+</b> to record your first sale.</div>';
+
+  $$('[data-open-prod]').forEach(function(r){ r.onclick=function(){ openProduct(r.dataset.openProd); }; });
+}
+
+function renderChart(){
+  var days=[], i;
+  for(i=6;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); days.push(iso(d)); }
+  var sv = days.map(function(day){ return db.sales.filter(function(s){return s.date===day;}).reduce(function(a,s){return a+saleTotal(s);},0); });
+  var ev = days.map(function(day){ return db.expenses.filter(function(e){return e.date===day;}).reduce(function(a,e){return a+e.amount;},0); });
+  var max = Math.max.apply(null, sv.concat(ev).concat([1]));
+  var W=320,H=140,pb=22,pt=8,bw=14,gap=(W-7*(bw*2+3))/8;
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Sales and expenses for the last 7 days">';
+  svg+='<line x1="0" y1="'+(H-pb)+'" x2="'+W+'" y2="'+(H-pb)+'" stroke="#d9d5bd"/>';
+  days.forEach(function(day,idx){
+    var x = gap + idx*(bw*2+3+gap);
+    var h1 = (H-pb-pt)*sv[idx]/max, h2=(H-pb-pt)*ev[idx]/max;
+    svg+='<rect x="'+x+'" y="'+(H-pb-h1)+'" width="'+bw+'" height="'+Math.max(h1,sv[idx]>0?2:0)+'" rx="3" fill="#0E5C48"/>';
+    svg+='<rect x="'+(x+bw+3)+'" y="'+(H-pb-h2)+'" width="'+bw+'" height="'+Math.max(h2,ev[idx]>0?2:0)+'" rx="3" fill="#c9a24b"/>';
+    var lbl = parse(day).toLocaleDateString('en-US',{weekday:'narrow'});
+    svg+='<text x="'+(x+bw+1.5)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="#6b7a72" font-weight="600">'+lbl+'</text>';
+  });
+  svg+='</svg>';
+  $('#chart').innerHTML = svg + '<div class="legend"><span><i style="background:#0E5C48"></i>Sales</span><span><i style="background:#c9a24b"></i>Expenses</span></div>';
+}
+
+function renderSales(){
+  var q = $('#q-sales').value.trim().toLowerCase();
+  var list = sortDesc(db.sales).filter(function(s){
+    return !q || (s.name+' '+s.method+' '+(s.note||'')).toLowerCase().indexOf(q)>-1;
+  });
+  $('#sales-list').innerHTML = list.length ? list.map(function(s){
+    return '<div class="row" data-sale="'+s.id+'"><div class="main"><div class="t">'+esc(s.name)+' ×'+s.qty+'</div>'+
+      '<div class="s">'+prettyDate(s.date)+' · '+esc(s.method)+(s.note?' · '+esc(s.note):'')+'</div></div>'+
+      '<div class="amt pos">'+money(saleTotal(s))+'<small>profit '+money(saleProfit(s))+'</small></div></div>';
+  }).join('') : '<div class="empty">'+(q?'No matches.':'No sales yet. Tap <b>+</b> to add one.')+'</div>';
+  $$('[data-sale]').forEach(function(r){ r.onclick=function(){ openSaleDetail(r.dataset.sale); }; });
+}
+
+function renderExpenses(){
+  var q = $('#q-exp').value.trim().toLowerCase();
+  var list = sortDesc(db.expenses).filter(function(e){
+    return !q || (e.category+' '+(e.note||'')).toLowerCase().indexOf(q)>-1;
+  });
+  $('#exp-list').innerHTML = list.length ? list.map(function(e){
+    return '<div class="row" data-exp="'+e.id+'"><div class="main"><div class="t">'+esc(e.category)+'</div>'+
+      '<div class="s">'+prettyDate(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div>'+
+      '<div class="amt neg">-'+money(e.amount)+'</div></div>';
+  }).join('') : '<div class="empty">'+(q?'No matches.':'No expenses yet. Tap <b>+</b> to add one.')+'</div>';
+  $$('[data-exp]').forEach(function(r){ r.onclick=function(){ openExpense(r.dataset.exp); }; });
+}
+
+function renderInventory(){
+  var q = $('#q-inv').value.trim().toLowerCase();
+  var list = db.products.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).filter(function(p){
+    return !q || (p.name+' '+(p.size||'')).toLowerCase().indexOf(q)>-1;
+  });
+  var value = db.products.reduce(function(a,p){return a+p.stock*p.cost;},0);
+  var head = db.products.length ? '<div class="note" style="margin-bottom:8px">Stock value at cost: <b>'+money(value)+'</b></div>' : '';
+  $('#inv-list').innerHTML = head + (list.length ? list.map(function(p){
+    var tag = p.stock<=0 ? '<span class="tag out">Out</span>' : p.stock<=p.low ? '<span class="tag warn">Low</span>' : '';
+    return '<div class="row" data-prod="'+p.id+'"><div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+tag+'</div>'+
+      '<div class="s">Cost '+money(p.cost)+' · Price '+money(p.price)+'</div></div>'+
+      '<div class="amt">'+p.stock+'<small>in stock</small></div></div>';
+  }).join('') : '<div class="empty">'+(q?'No matches.':'No products yet. Tap <b>+</b> to add your first item.')+'</div>');
+  $$('[data-prod]').forEach(function(r){ r.onclick=function(){ openProduct(r.dataset.prod); }; });
+}
+
+/* ---------- sheet (modal) ---------- */
+function openSheet(html){ $('#sheet').innerHTML = html; $('#sheet-bg').classList.add('open'); $('#sheet').scrollTop=0; }
+function closeSheet(){ $('#sheet-bg').classList.remove('open'); }
+$('#sheet-bg').addEventListener('click', function(e){ if(e.target===this) closeSheet(); });
+
+var METHODS = ['Cash','GCash','Maya','Bank transfer','Card','Other'];
+var CATS = ['Supplies / Materials','Printing','Packaging','Shipping','Ads / Marketing','Rent','Utilities','Salary / Labor','Transport','Other'];
+function opts(arr, sel){ return arr.map(function(x){ return '<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>'; }).join(''); }
+
+/* ----- sale ----- */
+function openSale(){
+  var prods = db.products.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+  var po = '<option value="">Custom item (not in stock list)</option>' + prods.map(function(p){
+    return '<option value="'+p.id+'">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+' ('+p.stock+' left)</option>';
+  }).join('');
+  openSheet(
+    '<h3>New sale</h3>'+
+    '<label>Item</label><select id="s-prod">'+po+'</select>'+
+    '<div id="s-custom"><label>Item name</label><input id="s-name" placeholder="e.g. Oversized tee – black"></div>'+
+    '<div class="two"><div><label>Qty</label><input id="s-qty" type="number" inputmode="numeric" min="1" value="1"></div>'+
+    '<div><label>Price each ('+esc(cur())+')</label><input id="s-price" type="number" inputmode="decimal" min="0" step="any"></div></div>'+
+    '<div id="s-costwrap"><label>Cost each ('+esc(cur())+') – optional, for profit</label><input id="s-cost" type="number" inputmode="decimal" min="0" step="any"></div>'+
+    '<div class="two"><div><label>Date</label><input id="s-date" type="date" value="'+todayISO()+'"></div>'+
+    '<div><label>Paid via</label><select id="s-method">'+opts(METHODS,'Cash')+'</select></div></div>'+
+    '<label>Note / customer (optional)</label><input id="s-note" placeholder="e.g. Maria – pick up Friday">'+
+    '<div class="total"><span>Total</span><span id="s-total">'+money(0)+'</span></div>'+
+    '<div class="actions"><button class="btn" id="s-save">Save sale</button><button class="btn ghost" id="s-cancel">Cancel</button></div>'
+  );
+  function recalc(){ $('#s-total').textContent = money(num($('#s-qty').value)*num($('#s-price').value)); }
+  function sync(){
+    var p = db.products.filter(function(x){return x.id===$('#s-prod').value;})[0];
+    $('#s-custom').style.display = p?'none':'block';
+    $('#s-costwrap').style.display = p?'none':'block';
+    if(p){ $('#s-price').value = p.price; }
+    recalc();
+  }
+  $('#s-prod').onchange=sync; $('#s-qty').oninput=recalc; $('#s-price').oninput=recalc;
+  $('#s-cancel').onclick=closeSheet;
+  $('#s-save').onclick=function(){
+    var p = db.products.filter(function(x){return x.id===$('#s-prod').value;})[0];
+    var qty = Math.floor(num($('#s-qty').value)), price = num($('#s-price').value);
+    var name = p ? (p.name+(p.size?' ('+p.size+')':'')) : $('#s-name').value.trim();
+    if(!name){ toast('Enter the item name'); return; }
+    if(qty<1){ toast('Quantity must be at least 1'); return; }
+    if(price<0 || $('#s-price').value===''){ toast('Enter the price'); return; }
+    if(p && qty>p.stock && !confirm('Only '+p.stock+' in stock. Record this sale anyway?')) return;
+    db.sales.push({id:uid(), date:$('#s-date').value||todayISO(), productId:p?p.id:'', name:name, qty:qty, price:price,
+      cost: p?p.cost:num($('#s-cost').value), method:$('#s-method').value, note:$('#s-note').value.trim()});
+    if(p) p.stock = p.stock - qty;
+    save(); closeSheet(); render(); toast('Sale saved');
+  };
+  sync();
+}
+
+function openSaleDetail(id){
+  var s = db.sales.filter(function(x){return x.id===id;})[0]; if(!s) return;
+  openSheet(
+    '<h3>'+esc(s.name)+'</h3>'+
+    '<div class="list">'+
+    '<div class="row"><div class="main"><div class="s">Date</div><div class="t">'+prettyDate(s.date)+'</div></div></div>'+
+    '<div class="row"><div class="main"><div class="s">Qty × price</div><div class="t">'+s.qty+' × '+money(s.price)+'</div></div><div class="amt pos">'+money(saleTotal(s))+'</div></div>'+
+    '<div class="row"><div class="main"><div class="s">Profit</div><div class="t">'+money(saleProfit(s))+'</div></div></div>'+
+    '<div class="row"><div class="main"><div class="s">Paid via</div><div class="t">'+esc(s.method)+'</div></div></div>'+
+    (s.note?'<div class="row"><div class="main"><div class="s">Note</div><div class="t" style="white-space:normal">'+esc(s.note)+'</div></div></div>':'')+
+    '</div>'+
+    '<div class="actions"><button class="btn danger" id="d-del">Delete this sale</button><button class="btn ghost" id="d-close">Close</button></div>'
+  );
+  $('#d-close').onclick=closeSheet;
+  $('#d-del').onclick=function(){
+    if(!confirm('Delete this sale?'+(s.productId?' The items will be added back to stock.':''))) return;
+    if(s.productId){
+      var p = db.products.filter(function(x){return x.id===s.productId;})[0];
+      if(p) p.stock += s.qty;
+    }
+    db.sales = db.sales.filter(function(x){return x.id!==id;});
+    save(); closeSheet(); render(); toast('Sale deleted');
+  };
+}
+
+/* ----- expense ----- */
+function openExpense(id){
+  var e = id ? db.expenses.filter(function(x){return x.id===id;})[0] : null;
+  openSheet(
+    '<h3>'+(e?'Edit expense':'New expense')+'</h3>'+
+    '<label>Category</label><select id="e-cat">'+opts(CATS, e?e.category:'Supplies / Materials')+'</select>'+
+    '<div class="two"><div><label>Amount ('+esc(cur())+')</label><input id="e-amt" type="number" inputmode="decimal" min="0" step="any" value="'+(e?e.amount:'')+'"></div>'+
+    '<div><label>Date</label><input id="e-date" type="date" value="'+(e?e.date:todayISO())+'"></div></div>'+
+    '<label>Note (optional)</label><input id="e-note" value="'+esc(e?e.note:'')+'" placeholder="e.g. 20 yards cotton fabric">'+
+    '<div class="actions"><button class="btn" id="e-save">Save expense</button>'+
+    (e?'<button class="btn danger" id="e-del">Delete</button>':'')+
+    '<button class="btn ghost" id="e-cancel">Cancel</button></div>'
+  );
+  $('#e-cancel').onclick=closeSheet;
+  $('#e-save').onclick=function(){
+    var amt = num($('#e-amt').value);
+    if(amt<=0){ toast('Enter the amount'); return; }
+    var rec = {id:e?e.id:uid(), date:$('#e-date').value||todayISO(), category:$('#e-cat').value, amount:amt, note:$('#e-note').value.trim()};
+    if(e){ Object.assign(e, rec); } else { db.expenses.push(rec); }
+    save(); closeSheet(); render(); toast('Expense saved');
+  };
+  if(e) $('#e-del').onclick=function(){
+    if(!confirm('Delete this expense?')) return;
+    db.expenses = db.expenses.filter(function(x){return x.id!==e.id;});
+    save(); closeSheet(); render(); toast('Expense deleted');
+  };
+}
+
+/* ----- product ----- */
+function openProduct(id){
+  var p = id ? db.products.filter(function(x){return x.id===id;})[0] : null;
+  openSheet(
+    '<h3>'+(p?'Edit product':'New product')+'</h3>'+
+    '<label>Product name</label><input id="p-name" value="'+esc(p?p.name:'')+'" placeholder="e.g. Classic tee – cream">'+
+    '<div class="two"><div><label>Size / variant</label><input id="p-size" value="'+esc(p?p.size:'')+'" placeholder="e.g. M"></div>'+
+    '<div><label>In stock</label><input id="p-stock" type="number" inputmode="numeric" value="'+(p?p.stock:0)+'"></div></div>'+
+    '<div class="two"><div><label>Cost ('+esc(cur())+')</label><input id="p-cost" type="number" inputmode="decimal" min="0" step="any" value="'+(p?p.cost:'')+'"></div>'+
+    '<div><label>Selling price ('+esc(cur())+')</label><input id="p-price" type="number" inputmode="decimal" min="0" step="any" value="'+(p?p.price:'')+'"></div></div>'+
+    '<label>Warn me when stock is at or below</label><input id="p-low" type="number" inputmode="numeric" min="0" value="'+(p?p.low:3)+'">'+
+    '<div class="actions"><button class="btn" id="p-save">Save product</button>'+
+    (p?'<button class="btn danger" id="p-del">Delete product</button>':'')+
+    '<button class="btn ghost" id="p-cancel">Cancel</button></div>'
+  );
+  $('#p-cancel').onclick=closeSheet;
+  $('#p-save').onclick=function(){
+    var name=$('#p-name').value.trim();
+    if(!name){ toast('Enter the product name'); return; }
+    var rec = {id:p?p.id:uid(), name:name, size:$('#p-size').value.trim(), stock:Math.floor(num($('#p-stock').value)),
+      cost:num($('#p-cost').value), price:num($('#p-price').value), low:Math.max(0,Math.floor(num($('#p-low').value)))};
+    if(p){ Object.assign(p, rec); } else { db.products.push(rec); }
+    save(); closeSheet(); render(); toast('Product saved');
+  };
+  if(p) $('#p-del').onclick=function(){
+    if(!confirm('Delete this product? Past sales are kept.')) return;
+    db.products = db.products.filter(function(x){return x.id!==p.id;});
+    save(); closeSheet(); render(); toast('Product deleted');
+  };
+}
+
+/* ---------- backup / export ---------- */
+function download(name, text, type){
+  var blob = new Blob([text], {type:type});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function csvCell(v){ v = String(v==null?'':v); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+$('#b-export').onclick=function(){
+  download('anyday-backup-'+todayISO()+'.json', JSON.stringify(db,null,2), 'application/json');
+  toast('Backup saved to your Downloads');
+};
+$('#b-import').onclick=function(){ $('#f-import').click(); };
+$('#f-import').onchange=function(){
+  var f=this.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var d=JSON.parse(r.result);
+      if(!d.products||!d.sales||!d.expenses) throw 0;
+      if(!confirm('Replace everything on this phone with the backup?')) return;
+      db=d; db.settings=db.settings||{currency:'₱'}; save(); render(); toast('Backup restored');
+    }catch(e){ toast('That file is not a valid backup'); }
+  };
+  r.readAsText(f); this.value='';
+};
+$('#b-csv-sales').onclick=function(){
+  var rows=[['Date','Item','Qty','Price each','Total','Profit','Paid via','Note']];
+  sortDesc(db.sales).forEach(function(s){ rows.push([s.date,s.name,s.qty,s.price,saleTotal(s),saleProfit(s),s.method,s.note]); });
+  download('anyday-sales-'+todayISO()+'.csv', rows.map(function(r){return r.map(csvCell).join(',');}).join('\n'), 'text/csv');
+};
+$('#b-csv-exp').onclick=function(){
+  var rows=[['Date','Category','Amount','Note']];
+  sortDesc(db.expenses).forEach(function(e){ rows.push([e.date,e.category,e.amount,e.note]); });
+  download('anyday-expenses-'+todayISO()+'.csv', rows.map(function(r){return r.map(csvCell).join(',');}).join('\n'), 'text/csv');
+};
+$('#cur').oninput=function(){ db.settings.currency=this.value||'₱'; save(); };
+$('#b-clear').onclick=function(){
+  if(!confirm('Erase ALL sales, expenses and products from this phone?')) return;
+  if(!confirm('This cannot be undone unless you saved a backup. Erase everything?')) return;
+  db=blank(); save(); render(); toast('All data erased');
+};
+
+/* ---------- start ---------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+go('home');
+})();
+</script>
+</body>
+</html>
