@@ -32,6 +32,9 @@ main{padding:16px;max-width:640px;margin:0 auto}
 section.tab{display:none}
 section.tab.active{display:block}
 h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 0 10px;font-weight:700}
+h2.t{font-size:22px;letter-spacing:0;text-transform:none;color:var(--ink);margin:4px 0 12px;font-weight:800}
+.back{display:inline-block;font-size:14px;color:var(--green);font-weight:700;padding:6px 0;margin-bottom:2px}
+.crumb{font-size:13px;color:var(--muted);margin:-6px 0 12px}
 .seg{display:flex;background:var(--cream-l);border:1px solid var(--line);border-radius:12px;padding:3px;gap:3px}
 .seg button{flex:1;border:0;background:transparent;padding:9px 4px;border-radius:9px;font:inherit;font-size:14px;color:var(--muted);font-weight:600}
 .seg button.on{background:var(--green);color:var(--cream)}
@@ -42,23 +45,37 @@ h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute
 .card.hero{grid-column:1/-1;background:var(--green);border-color:var(--green);color:var(--cream)}
 .card.hero .lbl{color:#bfd3c7}
 .card.hero .val{font-size:32px}
+.bar{height:8px;border-radius:99px;background:#0a4636;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:#9fd0b6}
+.hero .m{display:flex;justify-content:space-between;font-size:12.5px;color:#d6e6dc;margin-top:8px;font-weight:600}
 .neg{color:var(--red)} .hero .neg{color:#ffb3a4}
 .list{display:flex;flex-direction:column;gap:8px}
 .row{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.row.tap{cursor:pointer}
 .row .main{flex:1;min-width:0}
-.row .t{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .t{font-weight:700;overflow:hidden;text-overflow:ellipsis}
 .row .s{font-size:13px;color:var(--muted);margin-top:2px}
 .row .amt{font-weight:800;text-align:right;white-space:nowrap}
 .row .amt small{display:block;font-weight:600;font-size:12px;color:var(--muted)}
+.row.dim{opacity:.62}
 .pos{color:var(--green)}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--green-l);color:var(--green-d);margin-left:6px;vertical-align:middle}
-.tag.warn{background:#f6e3c0;color:#7a4d06}
-.tag.out{background:#f3d3cc;color:#8a2a1a}
+.chev{color:var(--muted);font-size:20px;line-height:1}
+.dots{color:var(--muted);font-size:22px;padding:2px 8px;line-height:1;font-weight:800}
+.tag,.chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle}
+.tag{background:var(--green-l);color:var(--green-d)}
+.tag.warn,.chip.c-pa{background:#f6e3c0;color:#7a4d06}
+.tag.out,.chip.c-un{background:#f3d3cc;color:#8a2a1a}
+.chip.c-pd{background:var(--green-l);color:var(--green-d)}
 .empty{text-align:center;color:var(--muted);padding:28px 10px;font-size:14px;background:var(--paper);border:1px dashed var(--line);border-radius:14px}
-.btn{border:0;background:var(--green);color:var(--cream);font:inherit;font-weight:700;padding:13px 18px;border-radius:12px;width:100%}
+.btn{border:0;background:var(--green);color:var(--cream);font:inherit;font-weight:700;padding:13px 18px;border-radius:12px;width:100%;display:block;text-align:center}
 .btn.ghost{background:var(--cream-l);color:var(--green);border:1px solid var(--line)}
 .btn.danger{background:#f3d3cc;color:#8a2a1a}
+.btn[disabled]{opacity:.45}
 .btn + .btn{margin-top:10px}
+.mini{border:1px solid var(--line);background:var(--cream-l);color:var(--green);font:inherit;font-size:13px;font-weight:700;padding:8px 12px;border-radius:10px}
+.mini.danger{background:#f3d3cc;color:#8a2a1a;border-color:#ecc0b7}
+.mini.solid{background:var(--green);color:var(--cream);border-color:var(--green)}
+.mini[disabled]{opacity:.45}
 .fab{position:fixed;right:18px;bottom:calc(86px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;
   border:0;background:var(--green);color:var(--cream);font-size:32px;line-height:1;box-shadow:0 6px 18px rgba(14,92,72,.35);z-index:15}
 nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);
@@ -69,9 +86,11 @@ nav button.on{color:var(--green)}
 .sheet-bg{position:fixed;inset:0;background:rgba(10,30,24,.45);z-index:40;display:none;align-items:flex-end;justify-content:center}
 .sheet-bg.open{display:flex}
 .sheet{background:var(--cream);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
-.sheet h3{margin:0 0 14px;font-size:20px}
+.sheet h3{margin:0 0 6px;font-size:20px}
+.sheet .sub{font-size:13px;color:var(--muted);margin-bottom:6px}
 label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.05em}
 input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:11px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+input[type=checkbox]{width:22px;height:22px;padding:0;accent-color:var(--green);flex:none;margin:0}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-color:var(--green)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .total{margin:16px 0 4px;padding:12px 14px;background:var(--green-l);border-radius:12px;display:flex;justify-content:space-between;font-weight:800;color:var(--green-d)}
@@ -81,9 +100,32 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .search{margin-bottom:10px}
 .note{font-size:13px;color:var(--muted);line-height:1.5}
+.note.ok{background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:8px 10px;margin:8px 0}
 #toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--cream);
-  padding:10px 16px;border-radius:99px;font-size:14px;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+  padding:10px 16px;border-radius:99px;font-size:14px;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
 #toast.show{opacity:1}
+/* stock drill-down */
+.bigs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
+.bigcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:22px 14px;text-align:center;cursor:pointer}
+.bigcard .bt{font-size:18px;font-weight:800;color:var(--green-d)}
+.bigcard .bs{font-size:12.5px;color:var(--muted);margin-top:4px;font-weight:600}
+.bigcard.solid{background:var(--green);border-color:var(--green)}
+.bigcard.solid .bt{color:var(--cream)} .bigcard.solid .bs{color:#bfd3c7}
+.actions-bar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px;align-items:center}
+.actions-bar .grow{flex:1}
+/* accordion rows (payable) */
+.acc{margin-bottom:8px}
+.accbody{background:var(--cream-l);border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;padding:10px;margin-top:-8px;padding-top:16px}
+.acc .row.open{border-radius:14px 14px 0 0;position:relative;z-index:1}
+.prow{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.prow .ptop{display:flex;gap:10px;align-items:center}
+.prow .main{flex:1;min-width:0}
+.prow .t{font-weight:700;font-size:15px}
+.prow .s{font-size:12.5px;color:var(--muted);margin-top:2px}
+.prow .amt{font-weight:800;white-space:nowrap}
+.pctl{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;align-items:center}
+.pctl select,.pctl input{width:auto;flex:1;min-width:120px;padding:9px 10px;font-size:14px}
+.menu-row{display:flex;align-items:center;gap:12px}
 </style>
 </head>
 <body>
@@ -128,16 +170,26 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
     <div class="list" id="exp-list"></div>
   </section>
 
-  <!-- INVENTORY -->
+  <!-- STOCK -->
   <section class="tab" id="tab-inv">
-    <h2 style="margin-top:4px">Inventory</h2>
-    <input class="search" id="q-inv" type="search" placeholder="Search products…">
-    <div class="list" id="inv-list"></div>
+    <h2 style="margin-top:4px">Stock</h2>
+    <div class="seg" id="stk-mode" style="margin-bottom:10px">
+      <button data-act="mode" data-m="my" class="on">My Stock</button>
+      <button data-act="mode" data-m="con">Consignors</button>
+    </div>
+    <input class="search" id="q-inv" type="search" placeholder="Search all products…">
+    <div id="inv-list"></div>
   </section>
 
   <!-- MORE -->
   <section class="tab" id="tab-more">
-    <h2 style="margin-top:4px">Backup</h2>
+    <h2 style="margin-top:4px">Accounts</h2>
+    <div class="list">
+      <div class="row tap" data-act="goto" data-t="ap"><div class="main"><div class="t">Accounts Payable</div><div class="s">What you owe your consignors</div></div><div class="amt" id="m-ap"></div><span class="chev">›</span></div>
+      <div class="row tap" data-act="goto" data-t="ar"><div class="main"><div class="t">Accounts Receivable</div><div class="s">What customers still owe you</div></div><div class="amt" id="m-ar"></div><span class="chev">›</span></div>
+    </div>
+
+    <h2>Backup</h2>
     <p class="note">Your data lives only on this phone. Save a backup file once in a while (and before clearing browser data or changing phones).</p>
     <button class="btn" id="b-export">Save backup file</button>
     <button class="btn ghost" id="b-import">Restore from backup file</button>
@@ -155,6 +207,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
     <button class="btn danger" id="b-clear">Erase all data</button>
     <p class="note" style="margin-top:18px">Anyday Apparel Tracker · works offline · no account, no fees.</p>
   </section>
+
+  <section class="tab" id="tab-ap"></section>
+  <section class="tab" id="tab-ar"></section>
+  <section class="tab" id="tab-acc"></section>
 </main>
 
 <button class="fab" id="fab" aria-label="Add">+</button>
@@ -174,15 +230,41 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--green);border-co
 (function(){
 'use strict';
 
-/* ---------- storage ---------- */
+/* ---------- data ---------- */
 var KEY = 'anyday_tracker_v1';
-var db = load();
+var DEFAULT_MEN = ['Printed Shirt','Plain','Simple','Sleeveless','Polo','Polo Shirt','Jacket','Pants','Shorts'];
+var DEFAULT_WOMEN = DEFAULT_MEN.concat(['Skirt','Dress','Coords']);
+var METHODS = ['Cash','GCash','Maya','Bank transfer','Card','Other'];
+var EXP_CATS = ['Supplies / Materials','Printing','Packaging','Shipping','Ads / Marketing','Rent','Utilities','Salary / Labor','Transport','Other'];
 
-function blank(){ return {products:[], sales:[], expenses:[], settings:{currency:'₱'}}; }
+function blank(){
+  return migrate({products:[], sales:[], expenses:[], settings:{currency:'₱'}});
+}
+function migrate(d){
+  d.products = d.products || []; d.sales = d.sales || []; d.expenses = d.expenses || [];
+  d.settings = d.settings || {currency:'₱'};
+  d.consignors = d.consignors || []; d.accounts = d.accounts || [];
+  d.payables = d.payables || []; d.payments = d.payments || [];
+  d.categories = d.categories || {};
+  if(!d.categories.men) d.categories.men = DEFAULT_MEN.slice();
+  if(!d.categories.women) d.categories.women = DEFAULT_WOMEN.slice();
+  d.products.forEach(function(p){
+    if(!p.kind) p.kind = 'accessory';
+    p.gender = p.gender || ''; p.category = p.category || ''; p.consignorId = p.consignorId || '';
+    delete p.price; // selling price is no longer kept on products
+  });
+  d.sales.forEach(function(s){
+    if(!s.status) s.status = 'paid';
+    s.accountId = s.accountId || ''; s.accountName = s.accountName || '';
+    s.consignorId = s.consignorId || ''; s.takenDate = s.takenDate || s.date;
+  });
+  return d;
+}
+var db = load();
 function load(){
   try{
     var d = JSON.parse(localStorage.getItem(KEY));
-    if(d && d.products && d.sales && d.expenses){ d.settings = d.settings || {currency:'₱'}; return d; }
+    if(d && d.products && d.sales && d.expenses) return migrate(d);
   }catch(e){}
   return blank();
 }
@@ -200,37 +282,70 @@ function cur(){ return db.settings.currency || '₱'; }
 function money(n){
   n = Number(n)||0;
   var neg = n<0; n = Math.abs(n);
-  var s = n.toLocaleString('en-US',{minimumFractionDigits:(n%1?2:0),maximumFractionDigits:2});
+  var s = n.toLocaleString('en-US',{minimumFractionDigits:(Math.round(n*100)%100?2:0),maximumFractionDigits:2});
   return (neg?'-':'') + cur() + s;
 }
+function r2(n){ return Math.round((Number(n)||0)*100)/100; }
 function num(v){ var n = parseFloat(v); return isNaN(n)?0:n; }
 function pad(n){ return n<10?'0'+n:''+n; }
 function iso(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
 function todayISO(){ return iso(new Date()); }
 function parse(s){ var p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
-function prettyDate(s){ return parse(s).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}); }
+function prettyDate(s){ return s ? parse(s).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'}) : ''; }
 function toast(msg){
   var t=$('#toast'); t.textContent=msg; t.classList.add('show');
-  clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove('show');},2200);
+  clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove('show');},2600);
 }
+function find(arr,id){ for(var i=0;i<arr.length;i++){ if(arr[i].id===id) return arr[i]; } return null; }
+function sum(arr,fn){ return arr.reduce(function(a,x){return a+fn(x);},0); }
+function byName(a,b){ return String(a.name).localeCompare(String(b.name)); }
+function sameName(a,b){ return String(a).trim().toLowerCase()===String(b).trim().toLowerCase(); }
 function startOf(range){
   var d = new Date(); d.setHours(0,0,0,0);
   if(range==='today') return iso(d);
-  if(range==='week'){ var wd=(d.getDay()+6)%7; d.setDate(d.getDate()-wd); return iso(d); } // Monday
+  if(range==='week'){ var wd=(d.getDay()+6)%7; d.setDate(d.getDate()-wd); return iso(d); }
   if(range==='month'){ d.setDate(1); return iso(d); }
   return '0000-00-00';
 }
 function saleTotal(s){ return s.qty * s.price; }
 function saleProfit(s){ return s.qty * (s.price - (s.cost||0)); }
+function isPaidSale(s){ return s.status!=='unpaid'; }
 function sortDesc(arr){ return arr.slice().sort(function(a,b){ return a.date<b.date?1:a.date>b.date?-1:(a.id<b.id?1:-1); }); }
+function opts(arr, sel){ return arr.map(function(x){ return '<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>'; }).join(''); }
+function genderName(g){ return g==='men'?'Men':'Women'; }
 
-/* ---------- navigation ---------- */
+/* ---------- navigation state ---------- */
 var tab = 'home', range = 'month';
+var nav = {mode:'my', kind:'', gender:'', cat:'', conId:'', view:false};
+var stSel = {}, apOpen = {}, apSel = {}, accId = '';
+
+function curCtx(){ return {kind:nav.kind, gender:nav.gender, cat:nav.cat, conId:nav.conId}; }
+function isLeaf(){
+  if(nav.mode==='my') return nav.kind==='accessory' || (nav.kind==='clothes' && !!nav.gender && !!nav.cat);
+  return !!nav.conId;
+}
+function ctxFilter(c){
+  return function(p){
+    if(c.kind==='consignor') return p.kind==='consignor' && p.consignorId===c.conId;
+    if(c.kind==='accessory') return p.kind==='accessory';
+    return p.kind==='clothes' && p.gender===c.gender && p.category===c.cat;
+  };
+}
+function pathText(c){
+  if(c.kind==='clothes') return genderName(c.gender)+' · '+c.cat;
+  if(c.kind==='accessory') return 'Accessories';
+  var k = find(db.consignors, c.conId);
+  return 'Consignor – '+(k?k.name:'');
+}
+function updateFab(){
+  var show = (tab==='home'||tab==='sales'||tab==='exp') || (tab==='inv' && isLeaf() && !$('#q-inv').value.trim());
+  $('#fab').style.display = show ? 'block' : 'none';
+}
 function go(t){
   tab = t;
   $$('section.tab').forEach(function(s){ s.classList.toggle('active', s.id==='tab-'+t); });
-  $$('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.t===t); });
-  $('#fab').style.display = (t==='more') ? 'none' : 'block';
+  var navT = (t==='ap'||t==='ar'||t==='acc') ? 'more' : t;
+  $$('nav button').forEach(function(b){ b.classList.toggle('on', b.dataset.t===navT); });
   window.scrollTo(0,0);
   render();
 }
@@ -244,10 +359,55 @@ $$('#range button').forEach(function(b){
 });
 $('#fab').onclick=function(){
   if(tab==='exp') openExpense();
-  else if(tab==='inv') openProduct();
+  else if(tab==='inv') openProduct(null, curCtx());
   else openSale();
 };
 ['q-sales','q-exp','q-inv'].forEach(function(id){ $('#'+id).oninput=render; });
+
+/* ---------- accounts logic ---------- */
+function accBalance(a){
+  var items = db.sales.filter(function(s){ return s.accountId===a.id && s.status==='unpaid'; });
+  var total = r2(sum(items, saleTotal));
+  var pays = db.payments.filter(function(p){ return p.accountId===a.id && !p.settled; });
+  var paid = r2(sum(pays, function(p){return p.amount;}));
+  return {items:items, total:total, paid:paid, bal:r2(total-paid), pays:pays};
+}
+function createPayable(s, date){
+  var k = find(db.consignors, s.consignorId);
+  db.payables.push({id:uid(), saleId:s.id, consignorId:s.consignorId, consignorName:k?k.name:'',
+    dateSold:date, name:s.name, qty:s.qty, unitCost:s.cost||0, amount:r2(s.qty*(s.cost||0)),
+    status:'To Pay', datePaid:'', via:''});
+}
+// returns true when the account was settled (all its unpaid sales became paid)
+function checkSettle(accountId, date, via){
+  var a = find(db.accounts, accountId); if(!a) return false;
+  var b = accBalance(a);
+  if(!b.items.length){
+    b.pays.forEach(function(p){ p.settled = true; });
+    return false;
+  }
+  if(b.bal > 0) return false;
+  b.items.forEach(function(s){
+    s.status = 'paid'; s.paidDate = date; s.date = date; s.method = via || 'Cash';
+    if(s.consignorId) createPayable(s, date);
+  });
+  b.pays.forEach(function(p){ p.settled = true; });
+  return true;
+}
+function accChip(b){
+  if(!b.items.length) return '<span class="chip c-pd">Clear</span>';
+  return b.paid>0 ? '<span class="chip c-pa">Partial</span>' : '<span class="chip c-un">Unpaid</span>';
+}
+function apGroups(){
+  var g=[], seen={};
+  db.consignors.forEach(function(c){ seen[c.id]=1; g.push({id:c.id,name:c.name}); });
+  db.payables.forEach(function(p){
+    if(!seen[p.consignorId]){ seen[p.consignorId]=1; g.push({id:p.consignorId,name:p.consignorName||'Removed consignor'}); }
+  });
+  return g.sort(byName);
+}
+function toPayTotal(){ return r2(sum(db.payables.filter(function(p){return p.status==='To Pay';}), function(p){return p.amount;})); }
+function toCollectTotal(){ return r2(sum(db.accounts, function(a){ return Math.max(0, accBalance(a).bal); })); }
 
 /* ---------- rendering ---------- */
 function render(){
@@ -257,18 +417,25 @@ function render(){
   if(tab==='sales') renderSales();
   if(tab==='exp') renderExpenses();
   if(tab==='inv') renderInventory();
-  if(tab==='more') $('#cur').value = cur();
+  if(tab==='more') renderMore();
+  if(tab==='ap') renderAP();
+  if(tab==='ar') renderAR();
+  if(tab==='acc') renderAcc();
+  updateFab();
+}
+function renderMore(){
+  $('#cur').value = cur();
+  var ap = toPayTotal(), ar = toCollectTotal();
+  $('#m-ap').innerHTML = ap ? money(ap)+'<small>to pay</small>' : '';
+  $('#m-ar').innerHTML = ar ? money(ar)+'<small>to collect</small>' : '';
 }
 
 function renderHome(){
   var from = startOf(range);
-  var S = db.sales.filter(function(s){return s.date>=from;});
+  var S = db.sales.filter(function(s){return isPaidSale(s) && s.date>=from;});
   var E = db.expenses.filter(function(e){return e.date>=from;});
-  var rev = S.reduce(function(a,s){return a+saleTotal(s);},0);
-  var gross = S.reduce(function(a,s){return a+saleProfit(s);},0);
-  var exp = E.reduce(function(a,e){return a+e.amount;},0);
-  var net = gross - exp;
-  var units = S.reduce(function(a,s){return a+s.qty;},0);
+  var rev = sum(S, saleTotal), gross = sum(S, saleProfit), exp = sum(E, function(e){return e.amount;});
+  var net = gross - exp, units = sum(S, function(s){return s.qty;});
   $('#cards').innerHTML =
     '<div class="card hero"><div class="lbl">Net profit (after expenses)</div><div class="val '+(net<0?'neg':'')+'">'+money(net)+'</div></div>'+
     '<div class="card"><div class="lbl">Sales</div><div class="val">'+money(rev)+'</div></div>'+
@@ -278,30 +445,28 @@ function renderHome(){
 
   renderChart();
 
-  var low = db.products.filter(function(p){ return p.stock <= p.low; })
-    .sort(function(a,b){return a.stock-b.stock;});
+  var low = db.products.filter(function(p){ return p.stock <= p.low; }).sort(function(a,b){return a.stock-b.stock;});
   $('#lowstock').innerHTML = low.length ? low.slice(0,6).map(function(p){
-    return '<div class="row" data-open-prod="'+p.id+'"><div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+'</div>'+
-      '<div class="s">'+(p.stock<=0?'<span class="tag out">Out of stock</span>':'<span class="tag warn">Low: '+p.stock+' left</span>')+'</div></div></div>';
+    return '<div class="row tap" data-act="editprod" data-id="'+p.id+'"><div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+'</div>'+
+      '<div class="s">'+esc(pathText(ctxOf(p)))+' · '+(p.stock<=0?'<span class="tag out" style="margin:0">Out of stock</span>':'<span class="tag warn" style="margin:0">Low: '+p.stock+' left</span>')+'</div></div></div>';
   }).join('') : '<div class="empty">Nothing running low 👍</div>';
 
   var items = [];
-  db.sales.forEach(function(s){ items.push({k:'s',d:s.date,id:s.id,o:s}); });
+  db.sales.forEach(function(s){ if(isPaidSale(s)) items.push({k:'s',d:s.date,id:s.id,o:s}); });
   db.expenses.forEach(function(e){ items.push({k:'e',d:e.date,id:e.id,o:e}); });
   items.sort(function(a,b){ return a.d<b.d?1:a.d>b.d?-1:(a.id<b.id?1:-1); });
   $('#recent').innerHTML = items.length ? items.slice(0,6).map(function(it){
     if(it.k==='s') return '<div class="row"><div class="main"><div class="t">'+esc(it.o.name)+' ×'+it.o.qty+'</div><div class="s">'+prettyDate(it.o.date)+' · '+esc(it.o.method)+'</div></div><div class="amt pos">+'+money(saleTotal(it.o))+'</div></div>';
     return '<div class="row"><div class="main"><div class="t">'+esc(it.o.category)+'</div><div class="s">'+prettyDate(it.o.date)+(it.o.note?' · '+esc(it.o.note):'')+'</div></div><div class="amt neg">-'+money(it.o.amount)+'</div></div>';
   }).join('') : '<div class="empty">No activity yet.<br>Tap <b>+</b> to record your first sale.</div>';
-
-  $$('[data-open-prod]').forEach(function(r){ r.onclick=function(){ openProduct(r.dataset.openProd); }; });
 }
 
 function renderChart(){
   var days=[], i;
   for(i=6;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); days.push(iso(d)); }
-  var sv = days.map(function(day){ return db.sales.filter(function(s){return s.date===day;}).reduce(function(a,s){return a+saleTotal(s);},0); });
-  var ev = days.map(function(day){ return db.expenses.filter(function(e){return e.date===day;}).reduce(function(a,e){return a+e.amount;},0); });
+  var paid = db.sales.filter(isPaidSale);
+  var sv = days.map(function(day){ return sum(paid.filter(function(s){return s.date===day;}), saleTotal); });
+  var ev = days.map(function(day){ return sum(db.expenses.filter(function(e){return e.date===day;}), function(e){return e.amount;}); });
   var max = Math.max.apply(null, sv.concat(ev).concat([1]));
   var W=320,H=140,pb=22,pt=8,bw=14,gap=(W-7*(bw*2+3))/8;
   var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Sales and expenses for the last 7 days">';
@@ -321,14 +486,15 @@ function renderChart(){
 function renderSales(){
   var q = $('#q-sales').value.trim().toLowerCase();
   var list = sortDesc(db.sales).filter(function(s){
-    return !q || (s.name+' '+s.method+' '+(s.note||'')).toLowerCase().indexOf(q)>-1;
+    return !q || (s.name+' '+s.method+' '+(s.note||'')+' '+(s.accountName||'')).toLowerCase().indexOf(q)>-1;
   });
   $('#sales-list').innerHTML = list.length ? list.map(function(s){
-    return '<div class="row" data-sale="'+s.id+'"><div class="main"><div class="t">'+esc(s.name)+' ×'+s.qty+'</div>'+
-      '<div class="s">'+prettyDate(s.date)+' · '+esc(s.method)+(s.note?' · '+esc(s.note):'')+'</div></div>'+
-      '<div class="amt pos">'+money(saleTotal(s))+'<small>profit '+money(saleProfit(s))+'</small></div></div>';
+    var un = s.status==='unpaid';
+    return '<div class="row tap" data-act="saledetail" data-id="'+s.id+'"><div class="main"><div class="t">'+esc(s.name)+' ×'+s.qty+
+      (un?'<span class="chip c-un">Not yet paid</span>':'')+'</div>'+
+      '<div class="s">'+prettyDate(s.date)+' · '+(un?esc(s.accountName):esc(s.method))+(s.note?' · '+esc(s.note):'')+'</div></div>'+
+      '<div class="amt '+(un?'':'pos')+'">'+money(saleTotal(s))+'<small>'+(un?'not counted yet':'profit '+money(saleProfit(s)))+'</small></div></div>';
   }).join('') : '<div class="empty">'+(q?'No matches.':'No sales yet. Tap <b>+</b> to add one.')+'</div>';
-  $$('[data-sale]').forEach(function(r){ r.onclick=function(){ openSaleDetail(r.dataset.sale); }; });
 }
 
 function renderExpenses(){
@@ -337,27 +503,181 @@ function renderExpenses(){
     return !q || (e.category+' '+(e.note||'')).toLowerCase().indexOf(q)>-1;
   });
   $('#exp-list').innerHTML = list.length ? list.map(function(e){
-    return '<div class="row" data-exp="'+e.id+'"><div class="main"><div class="t">'+esc(e.category)+'</div>'+
+    return '<div class="row tap" data-act="editexp" data-id="'+e.id+'"><div class="main"><div class="t">'+esc(e.category)+'</div>'+
       '<div class="s">'+prettyDate(e.date)+(e.note?' · '+esc(e.note):'')+'</div></div>'+
       '<div class="amt neg">-'+money(e.amount)+'</div></div>';
   }).join('') : '<div class="empty">'+(q?'No matches.':'No expenses yet. Tap <b>+</b> to add one.')+'</div>';
-  $$('[data-exp]').forEach(function(r){ r.onclick=function(){ openExpense(r.dataset.exp); }; });
 }
 
+/* ----- stock ----- */
+function ctxOf(p){ return {kind:p.kind, gender:p.gender, cat:p.category, conId:p.consignorId}; }
+function bigCard(attrs, title, sub){
+  return '<div class="bigcard" data-act="nav" '+attrs+'><div class="bt">'+title+'</div><div class="bs">'+sub+'</div></div>';
+}
+function plural(n,w){ return n+' '+w+(n===1?'':'s'); }
+function prodRow(p, o){
+  o = o || {};
+  var tag = p.stock<=0 ? '<span class="tag out">Out</span>' : p.stock<=p.low ? '<span class="tag warn">Low</span>' : '';
+  var sub = o.path ? esc(pathText(ctxOf(p)))+' · ' : '';
+  var costTxt = p.kind==='consignor' ? 'Pay '+money(p.cost) : 'Cost '+money(p.cost);
+  return '<div class="row tap" data-act="editprod" data-id="'+p.id+'">'+
+    (o.check ? '<input type="checkbox" data-act="tick" data-id="'+p.id+'"'+(stSel[p.id]?' checked':'')+'>' : '')+
+    '<div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+tag+'</div>'+
+    '<div class="s">'+sub+costTxt+'</div></div>'+
+    '<div class="amt">'+p.stock+'<small>in stock</small></div></div>';
+}
+function crumbText(){
+  var parts=[];
+  if(nav.mode==='con'){ parts.push('Consignors'); var k=find(db.consignors,nav.conId); if(k) parts.push(k.name); }
+  else {
+    if(nav.kind==='clothes') parts.push('Clothes'); if(nav.kind==='accessory') parts.push('Accessories');
+    if(nav.gender) parts.push(genderName(nav.gender)); if(nav.cat) parts.push(nav.cat);
+  }
+  return parts.join(' › ');
+}
 function renderInventory(){
-  var q = $('#q-inv').value.trim().toLowerCase();
-  var list = db.products.slice().sort(function(a,b){ return a.name.localeCompare(b.name); }).filter(function(p){
-    return !q || (p.name+' '+(p.size||'')).toLowerCase().indexOf(q)>-1;
+  $$('#stk-mode button').forEach(function(b){ b.classList.toggle('on', b.dataset.m===nav.mode); });
+  var q = $('#q-inv').value.trim().toLowerCase(), h='';
+  if(q){
+    var res = db.products.filter(function(p){
+      return (p.name+' '+(p.size||'')+' '+(p.category||'')+' '+pathText(ctxOf(p))).toLowerCase().indexOf(q)>-1;
+    }).sort(byName);
+    h = res.length ? '<div class="list">'+res.map(function(p){return prodRow(p,{path:true});}).join('')+'</div>' : '<div class="empty">No matches.</div>';
+    $('#inv-list').innerHTML = h; return;
+  }
+  var back = '<div class="back" data-act="stkback">‹ Back</div>';
+  if(nav.view){
+    var c = curCtx(), list = db.products.filter(ctxFilter(c)).sort(byName);
+    var n = Object.keys(stSel).filter(function(id){ return stSel[id] && find(db.products,id); }).length;
+    h = back+'<h2 class="t">'+esc(crumbText().split(' › ').pop())+'</h2><div class="crumb">'+esc(crumbText())+' · '+plural(list.length,'product')+'</div>';
+    if(list.length){
+      h += '<div class="actions-bar"><button class="mini" data-act="tickall">'+(n===list.length?'Untick all':'Tick all')+'</button><span class="grow"></span>'+
+           '<button class="mini danger" data-act="delsel"'+(n?'':' disabled')+'>Delete selected ('+n+')</button>'+
+           '<button class="mini danger" data-act="delall">Delete all ('+list.length+')</button></div>';
+      h += '<div class="list">'+list.map(function(p){return prodRow(p,{check:true});}).join('')+'</div>';
+    } else h += '<div class="empty">No products here yet.</div>';
+  }
+  else if(isLeaf()){
+    var cnt = db.products.filter(ctxFilter(curCtx())).length;
+    h = back+'<h2 class="t">'+esc(crumbText().split(' › ').pop())+'</h2><div class="crumb">'+esc(crumbText())+'</div>'+
+      '<div class="bigs"><div class="bigcard solid" data-act="addprod"><div class="bt">＋ Add product</div><div class="bs">Fill in the form</div></div>'+
+      '<div class="bigcard" data-act="viewprods"><div class="bt">View products</div><div class="bs">'+plural(cnt,'item')+'</div></div></div>';
+  }
+  else if(nav.mode==='my'){
+    if(!nav.kind){
+      var nc = db.products.filter(function(p){return p.kind==='clothes';}).length;
+      var na = db.products.filter(function(p){return p.kind==='accessory';}).length;
+      var val = sum(db.products.filter(function(p){return p.kind!=='consignor';}), function(p){return p.stock*p.cost;});
+      h = '<div class="bigs">'+bigCard('data-kind="clothes"','Clothes',plural(nc,'item'))+bigCard('data-kind="accessory"','Accessories',plural(na,'item'))+'</div>'+
+          '<div class="note">Your own stock value at cost: <b>'+money(val)+'</b></div>';
+    }
+    else if(nav.kind==='clothes' && !nav.gender){
+      var nm = db.products.filter(function(p){return p.kind==='clothes'&&p.gender==='men';}).length;
+      var nw = db.products.filter(function(p){return p.kind==='clothes'&&p.gender==='women';}).length;
+      h = back+'<h2 class="t">Clothes</h2><div class="bigs">'+bigCard('data-gender="men"','Men',plural(nm,'item'))+bigCard('data-gender="women"','Women',plural(nw,'item'))+'</div>';
+    }
+    else {
+      var cats = db.categories[nav.gender] || [];
+      h = back+'<h2 class="t">'+genderName(nav.gender)+'</h2><div class="crumb">Clothes › '+genderName(nav.gender)+' · choose a category</div><div class="list">'+
+        cats.map(function(cn){
+          var k = db.products.filter(function(p){return p.kind==='clothes'&&p.gender===nav.gender&&p.category===cn;}).length;
+          return '<div class="row tap" data-act="nav" data-cat="'+esc(cn)+'"><div class="main"><div class="t">'+esc(cn)+'</div><div class="s">'+plural(k,'product')+'</div></div>'+
+                 '<span class="dots" data-act="catmenu" data-cat="'+esc(cn)+'">⋮</span></div>';
+        }).join('')+'</div>'+
+        '<div style="margin-top:12px" class="btn ghost" data-act="addcat">+ Add category</div>';
+    }
+  }
+  else { // consignors list
+    var cons = db.consignors.slice().sort(byName);
+    h = (cons.length ? '<div class="list">'+cons.map(function(k){
+      var n2 = db.products.filter(function(p){return p.consignorId===k.id;}).length;
+      return '<div class="row tap" data-act="nav" data-con="'+k.id+'"><div class="main"><div class="t">'+esc(k.name)+'</div><div class="s">'+plural(n2,'product')+'</div></div>'+
+        '<span class="dots" data-act="conmenu" data-id="'+k.id+'">⋮</span></div>';
+    }).join('')+'</div>' : '<div class="empty">No consignors yet.<br>Add a name below.</div>')+
+    '<div style="margin-top:12px" class="btn ghost" data-act="addcon">+ Add consignor name</div>';
+  }
+  $('#inv-list').innerHTML = h;
+}
+
+/* ----- accounts payable ----- */
+function renderAP(){
+  var groups = apGroups();
+  var h = '<div class="back" data-act="goto" data-t="more">‹ More</div><h2 class="t">Accounts Payable</h2>'+
+    '<div class="cards" style="margin-top:0"><div class="card hero"><div class="lbl">Total to pay consignors</div><div class="val">'+money(toPayTotal())+'</div></div></div>'+
+    '<h2>Consignors</h2>';
+  if(!groups.length) h += '<div class="empty">No consignors yet.<br>Add them in Stock → Consignors.</div>';
+  groups.forEach(function(g){
+    var rows = db.payables.filter(function(p){return p.consignorId===g.id;}).sort(function(a,b){ return a.dateSold<b.dateSold?1:a.dateSold>b.dateSold?-1:0; });
+    var due = r2(sum(rows.filter(function(p){return p.status==='To Pay';}), function(p){return p.amount;}));
+    var open = !!apOpen[g.id];
+    h += '<div class="acc"><div class="row tap'+(open?' open':'')+'" data-act="apopen" data-id="'+g.id+'"><div class="main"><div class="t">'+esc(g.name)+'</div><div class="s">'+plural(rows.length,'record')+'</div></div>'+
+      '<div class="amt '+(due?'neg':'')+'">'+money(due)+'<small>to pay</small></div><span class="chev">'+(open?'▾':'›')+'</span></div>';
+    if(open){
+      h += '<div class="accbody">';
+      if(!rows.length) h += '<div class="note" style="padding:4px 2px 8px">Nothing yet. When you sell this consignor\'s items, they show up here.</div>';
+      else {
+        var nsel = rows.filter(function(p){return apSel[p.id];}).length;
+        h += '<div class="actions-bar"><button class="mini" data-act="apall" data-id="'+g.id+'">'+(nsel===rows.length?'Untick all':'Tick all')+'</button><span class="grow"></span>'+
+          '<button class="mini solid" data-act="apmark"'+(nsel?'':' disabled')+'>Mark Paid ('+nsel+')</button>'+
+          '<button class="mini danger" data-act="apdelsel"'+(nsel?'':' disabled')+'>Delete ('+nsel+')</button></div>';
+        rows.forEach(function(p){
+          var paid = p.status==='Paid';
+          h += '<div class="prow"><div class="ptop"><input type="checkbox" data-act="aptick" data-id="'+p.id+'"'+(apSel[p.id]?' checked':'')+'>'+
+            '<div class="main"><div class="t">'+esc(p.name)+' ×'+p.qty+'</div><div class="s">Sold '+prettyDate(p.dateSold)+' · '+money(p.unitCost)+' each</div></div>'+
+            '<div class="amt">'+money(p.amount)+'</div></div>'+
+            '<div class="pctl"><select data-chg="apstatus" data-id="'+p.id+'"><option'+(paid?'':' selected')+'>To Pay</option><option'+(paid?' selected':'')+'>Paid</option></select>'+
+            (paid ? '<input type="date" data-chg="apdate" data-id="'+p.id+'" value="'+esc(p.datePaid)+'" aria-label="Date paid"><select data-chg="apvia" data-id="'+p.id+'" aria-label="Paid via">'+opts(METHODS,p.via)+'</select>' : '')+
+            '<button class="mini danger" data-act="apdel" data-id="'+p.id+'">Delete</button></div></div>';
+        });
+      }
+      h += '</div>';
+    }
+    h += '</div>';
   });
-  var value = db.products.reduce(function(a,p){return a+p.stock*p.cost;},0);
-  var head = db.products.length ? '<div class="note" style="margin-bottom:8px">Stock value at cost: <b>'+money(value)+'</b></div>' : '';
-  $('#inv-list').innerHTML = head + (list.length ? list.map(function(p){
-    var tag = p.stock<=0 ? '<span class="tag out">Out</span>' : p.stock<=p.low ? '<span class="tag warn">Low</span>' : '';
-    return '<div class="row" data-prod="'+p.id+'"><div class="main"><div class="t">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+tag+'</div>'+
-      '<div class="s">Cost '+money(p.cost)+' · Price '+money(p.price)+'</div></div>'+
-      '<div class="amt">'+p.stock+'<small>in stock</small></div></div>';
-  }).join('') : '<div class="empty">'+(q?'No matches.':'No products yet. Tap <b>+</b> to add your first item.')+'</div>');
-  $$('[data-prod]').forEach(function(r){ r.onclick=function(){ openProduct(r.dataset.prod); }; });
+  $('#tab-ap').innerHTML = h;
+}
+
+/* ----- accounts receivable ----- */
+function renderAR(){
+  var accs = db.accounts.slice().sort(byName);
+  var h = '<div class="back" data-act="goto" data-t="more">‹ More</div><h2 class="t">Accounts Receivable</h2>'+
+    '<div class="cards" style="margin-top:0"><div class="card hero"><div class="lbl">Total still to collect</div><div class="val">'+money(toCollectTotal())+'</div></div></div>'+
+    '<h2>Accounts name</h2>';
+  if(!accs.length) h += '<div class="empty">No accounts yet.<br>Add a name below, or choose “Not yet paid” when you record a sale.</div>';
+  else h += '<div class="list">'+accs.map(function(a){
+    var b = accBalance(a);
+    return '<div class="row"><div class="main"><div class="t">'+esc(a.name)+accChip(b)+'</div><div class="s">'+plural(b.items.length,'item')+' · balance '+money(Math.max(0,b.bal))+'</div></div>'+
+      '<button class="mini" style="border-color:var(--green)" data-act="accview" data-id="'+a.id+'">View</button>'+
+      '<span class="dots" data-act="accmenu" data-id="'+a.id+'">⋮</span></div>';
+  }).join('')+'</div>';
+  h += '<div style="margin-top:12px" class="btn ghost" data-act="addacc">+ Add account name</div>';
+  $('#tab-ar').innerHTML = h;
+}
+function renderAcc(){
+  var a = find(db.accounts, accId);
+  if(!a){ go('ar'); return; }
+  var b = accBalance(a);
+  var pct = b.total ? Math.min(100, Math.max(0, b.paid/b.total*100)) : 0;
+  var all = db.sales.filter(function(s){return s.accountId===a.id;}).sort(function(x,y){ var dx=x.takenDate||x.date, dy=y.takenDate||y.date; return dx<dy?1:dx>dy?-1:0; });
+  var pays = db.payments.filter(function(p){return p.accountId===a.id;}).sort(function(x,y){ return x.date<y.date?1:x.date>y.date?-1:(x.id<y.id?1:-1); });
+  var h = '<div class="back" data-act="goto" data-t="ar">‹ Accounts</div><h2 class="t">'+esc(a.name)+accChip(b)+'</h2>'+
+    '<div class="cards" style="margin-top:0"><div class="card hero"><div class="lbl">Balance to pay</div><div class="val">'+money(Math.max(0,b.bal))+'</div>'+
+    '<div class="bar"><i style="width:'+pct+'%"></i></div><div class="m"><span>Total taken '+money(b.total)+'</span><span>Paid '+money(b.paid)+'</span></div></div></div>'+
+    '<div style="margin-top:12px"><button class="btn" data-act="addpay" data-id="'+a.id+'"'+(b.items.length?'':' disabled')+'>Add payment</button></div>'+
+    '<h2>Items taken</h2>';
+  if(!all.length) h += '<div class="empty">No items yet. Record a sale as <b>Not yet paid</b> and choose this account.</div>';
+  else h += '<div class="list">'+all.map(function(s){
+    var un = s.status==='unpaid';
+    return '<div class="row'+(un?'':' dim')+'"><div class="main"><div class="t">'+esc(s.name)+' ×'+s.qty+'</div>'+
+      '<div class="s">Taken '+prettyDate(s.takenDate||s.date)+' · '+(un?'Not yet paid':'Paid '+prettyDate(s.paidDate||s.date))+'</div></div><div class="amt">'+money(saleTotal(s))+'</div></div>';
+  }).join('')+'</div>';
+  h += '<h2>Payments</h2>';
+  if(!pays.length) h += '<div class="empty">No payments yet.</div>';
+  else h += '<div class="list">'+pays.map(function(p){
+    return '<div class="row'+(p.settled?' dim':' tap')+'"'+(p.settled?'':' data-act="delpay" data-id="'+p.id+'"')+'><div class="main"><div class="t">'+prettyDate(p.date)+(p.settled?'<span class="tag">Settled</span>':'')+'</div>'+
+      '<div class="s">Paid via '+esc(p.via)+(p.settled?'':' · tap to remove')+'</div></div><div class="amt pos">+'+money(p.amount)+'</div></div>';
+  }).join('')+'</div>';
+  $('#tab-acc').innerHTML = h;
 }
 
 /* ---------- sheet (modal) ---------- */
@@ -365,64 +685,115 @@ function openSheet(html){ $('#sheet').innerHTML = html; $('#sheet-bg').classList
 function closeSheet(){ $('#sheet-bg').classList.remove('open'); }
 $('#sheet-bg').addEventListener('click', function(e){ if(e.target===this) closeSheet(); });
 
-var METHODS = ['Cash','GCash','Maya','Bank transfer','Card','Other'];
-var CATS = ['Supplies / Materials','Printing','Packaging','Shipping','Ads / Marketing','Rent','Utilities','Salary / Labor','Transport','Other'];
-function opts(arr, sel){ return arr.map(function(x){ return '<option'+(x===sel?' selected':'')+'>'+esc(x)+'</option>'; }).join(''); }
+function openNameSheet(title, value, placeholder, cb){
+  openSheet('<h3>'+esc(title)+'</h3><label>Name</label><input id="n-name" value="'+esc(value)+'" placeholder="'+esc(placeholder)+'" maxlength="60">'+
+    '<div class="actions"><button class="btn" id="n-save">Save</button><button class="btn ghost" id="n-cancel">Cancel</button></div>');
+  $('#n-cancel').onclick = closeSheet;
+  $('#n-save').onclick = function(){
+    var v = $('#n-name').value.trim();
+    if(!v){ toast('Enter a name'); return; }
+    if(cb(v) !== false) closeSheet();
+  };
+  setTimeout(function(){ var i=$('#n-name'); if(i) i.focus(); }, 50);
+}
+function openMenuSheet(title, items){
+  openSheet('<h3>'+esc(title)+'</h3><div class="actions">'+items.map(function(it,i){
+    return '<button class="btn '+(it.cls||'ghost')+'" data-mi="'+i+'">'+esc(it.label)+'</button>';
+  }).join('')+'<button class="btn ghost" id="m-cancel">Cancel</button></div>');
+  $$('[data-mi]').forEach(function(b){ b.onclick=function(){ closeSheet(); items[+b.dataset.mi].fn(); }; });
+  $('#m-cancel').onclick = closeSheet;
+}
 
 /* ----- sale ----- */
+function prodOptions(){
+  function o(p){ return '<option value="'+p.id+'">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+' ('+p.stock+' left)</option>'; }
+  var h = '<option value="">Custom item (not in stock list)</option>';
+  var mine = db.products.filter(function(p){return p.kind!=='consignor';}).sort(byName);
+  if(mine.length) h += '<optgroup label="My stock">'+mine.map(o).join('')+'</optgroup>';
+  db.consignors.slice().sort(byName).forEach(function(k){
+    var ps = db.products.filter(function(p){return p.consignorId===k.id;}).sort(byName);
+    if(ps.length) h += '<optgroup label="Consignor – '+esc(k.name)+'">'+ps.map(o).join('')+'</optgroup>';
+  });
+  return h;
+}
 function openSale(){
-  var prods = db.products.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
-  var po = '<option value="">Custom item (not in stock list)</option>' + prods.map(function(p){
-    return '<option value="'+p.id+'">'+esc(p.name)+(p.size?' · '+esc(p.size):'')+' ('+p.stock+' left)</option>';
-  }).join('');
+  var accOpts = '<option value="">Choose account name…</option>'+db.accounts.slice().sort(byName).map(function(a){return '<option value="'+a.id+'">'+esc(a.name)+'</option>';}).join('')+'<option value="__new">+ New account name…</option>';
   openSheet(
     '<h3>New sale</h3>'+
-    '<label>Item</label><select id="s-prod">'+po+'</select>'+
+    '<label>Item</label><select id="s-prod">'+prodOptions()+'</select>'+
     '<div id="s-custom"><label>Item name</label><input id="s-name" placeholder="e.g. Oversized tee – black"></div>'+
     '<div class="two"><div><label>Qty</label><input id="s-qty" type="number" inputmode="numeric" min="1" value="1"></div>'+
     '<div><label>Price each ('+esc(cur())+')</label><input id="s-price" type="number" inputmode="decimal" min="0" step="any"></div></div>'+
     '<div id="s-costwrap"><label>Cost each ('+esc(cur())+') – optional, for profit</label><input id="s-cost" type="number" inputmode="decimal" min="0" step="any"></div>'+
     '<div class="two"><div><label>Date</label><input id="s-date" type="date" value="'+todayISO()+'"></div>'+
-    '<div><label>Paid via</label><select id="s-method">'+opts(METHODS,'Cash')+'</select></div></div>'+
+    '<div><label>Payment</label><select id="s-status"><option value="paid">Paid</option><option value="unpaid">Not yet paid</option></select></div></div>'+
+    '<div id="s-paidwrap"><label>Paid via</label><select id="s-method">'+opts(METHODS,'Cash')+'</select></div>'+
+    '<div id="s-accwrap" style="display:none"><label>Account name</label><select id="s-acc">'+accOpts+'</select>'+
+    '<input id="s-newacc" placeholder="New account name" style="display:none;margin-top:8px">'+
+    '<div class="note ok">Not counted as a sale until this account is fully paid. Stock goes down now.</div></div>'+
     '<label>Note / customer (optional)</label><input id="s-note" placeholder="e.g. Maria – pick up Friday">'+
     '<div class="total"><span>Total</span><span id="s-total">'+money(0)+'</span></div>'+
     '<div class="actions"><button class="btn" id="s-save">Save sale</button><button class="btn ghost" id="s-cancel">Cancel</button></div>'
   );
   function recalc(){ $('#s-total').textContent = money(num($('#s-qty').value)*num($('#s-price').value)); }
   function sync(){
-    var p = db.products.filter(function(x){return x.id===$('#s-prod').value;})[0];
+    var p = find(db.products, $('#s-prod').value);
     $('#s-custom').style.display = p?'none':'block';
     $('#s-costwrap').style.display = p?'none':'block';
-    if(p){ $('#s-price').value = p.price; }
+    var un = $('#s-status').value==='unpaid';
+    $('#s-paidwrap').style.display = un?'none':'block';
+    $('#s-accwrap').style.display = un?'block':'none';
+    $('#s-newacc').style.display = ($('#s-acc').value==='__new')?'block':'none';
     recalc();
   }
-  $('#s-prod').onchange=sync; $('#s-qty').oninput=recalc; $('#s-price').oninput=recalc;
+  $('#s-prod').onchange=function(){ $('#s-price').value=''; sync(); };
+  ['s-status','s-acc'].forEach(function(id){ $('#'+id).onchange=sync; });
+  $('#s-qty').oninput=recalc; $('#s-price').oninput=recalc;
   $('#s-cancel').onclick=closeSheet;
   $('#s-save').onclick=function(){
-    var p = db.products.filter(function(x){return x.id===$('#s-prod').value;})[0];
+    var p = find(db.products, $('#s-prod').value);
     var qty = Math.floor(num($('#s-qty').value)), price = num($('#s-price').value);
     var name = p ? (p.name+(p.size?' ('+p.size+')':'')) : $('#s-name').value.trim();
+    var un = $('#s-status').value==='unpaid';
     if(!name){ toast('Enter the item name'); return; }
     if(qty<1){ toast('Quantity must be at least 1'); return; }
     if(price<0 || $('#s-price').value===''){ toast('Enter the price'); return; }
+    var acc = null;
+    if(un){
+      var sel = $('#s-acc').value;
+      if(!sel){ toast('Choose an account name'); return; }
+      if(sel==='__new'){
+        var nn = $('#s-newacc').value.trim();
+        if(!nn){ toast('Enter the new account name'); return; }
+        acc = db.accounts.filter(function(a){return sameName(a.name,nn);})[0];
+        if(!acc){ acc = {id:uid(), name:nn}; db.accounts.push(acc); }
+      } else acc = find(db.accounts, sel);
+    }
     if(p && qty>p.stock && !confirm('Only '+p.stock+' in stock. Record this sale anyway?')) return;
-    db.sales.push({id:uid(), date:$('#s-date').value||todayISO(), productId:p?p.id:'', name:name, qty:qty, price:price,
-      cost: p?p.cost:num($('#s-cost').value), method:$('#s-method').value, note:$('#s-note').value.trim()});
+    var date = $('#s-date').value||todayISO();
+    var s = {id:uid(), date:date, takenDate:date, productId:p?p.id:'', name:name, qty:qty, price:price,
+      cost: p?p.cost:num($('#s-cost').value), method: un?'':$('#s-method').value, note:$('#s-note').value.trim(),
+      status: un?'unpaid':'paid', accountId: acc?acc.id:'', accountName: acc?acc.name:'', paidDate: un?'':date,
+      consignorId: (p && p.kind==='consignor') ? p.consignorId : ''};
+    db.sales.push(s);
     if(p) p.stock = p.stock - qty;
-    save(); closeSheet(); render(); toast('Sale saved');
+    if(!un && s.consignorId) createPayable(s, date);
+    save(); closeSheet(); render(); toast(un?'Saved – added to '+acc.name:'Sale saved');
   };
   sync();
 }
 
 function openSaleDetail(id){
-  var s = db.sales.filter(function(x){return x.id===id;})[0]; if(!s) return;
+  var s = find(db.sales, id); if(!s) return;
+  var un = s.status==='unpaid';
   openSheet(
     '<h3>'+esc(s.name)+'</h3>'+
     '<div class="list">'+
-    '<div class="row"><div class="main"><div class="s">Date</div><div class="t">'+prettyDate(s.date)+'</div></div></div>'+
+    '<div class="row"><div class="main"><div class="s">'+(un?'Date taken':'Date')+'</div><div class="t">'+prettyDate(s.date)+'</div></div></div>'+
     '<div class="row"><div class="main"><div class="s">Qty × price</div><div class="t">'+s.qty+' × '+money(s.price)+'</div></div><div class="amt pos">'+money(saleTotal(s))+'</div></div>'+
-    '<div class="row"><div class="main"><div class="s">Profit</div><div class="t">'+money(saleProfit(s))+'</div></div></div>'+
-    '<div class="row"><div class="main"><div class="s">Paid via</div><div class="t">'+esc(s.method)+'</div></div></div>'+
+    (un ? '<div class="row"><div class="main"><div class="s">Status</div><div class="t">Not yet paid · '+esc(s.accountName)+'</div></div></div>'
+        : '<div class="row"><div class="main"><div class="s">Profit</div><div class="t">'+money(saleProfit(s))+'</div></div></div>'+
+          '<div class="row"><div class="main"><div class="s">Paid via</div><div class="t">'+esc(s.method)+'</div></div></div>')+
     (s.note?'<div class="row"><div class="main"><div class="s">Note</div><div class="t" style="white-space:normal">'+esc(s.note)+'</div></div></div>':'')+
     '</div>'+
     '<div class="actions"><button class="btn danger" id="d-del">Delete this sale</button><button class="btn ghost" id="d-close">Close</button></div>'
@@ -430,21 +801,22 @@ function openSaleDetail(id){
   $('#d-close').onclick=closeSheet;
   $('#d-del').onclick=function(){
     if(!confirm('Delete this sale?'+(s.productId?' The items will be added back to stock.':''))) return;
-    if(s.productId){
-      var p = db.products.filter(function(x){return x.id===s.productId;})[0];
-      if(p) p.stock += s.qty;
-    }
+    var p = find(db.products, s.productId);
+    if(p) p.stock += s.qty;
+    // a still-unpaid payable row goes away with the sale; a Paid one is kept
+    db.payables = db.payables.filter(function(x){ return !(x.saleId===s.id && x.status==='To Pay'); });
     db.sales = db.sales.filter(function(x){return x.id!==id;});
+    if(un && s.accountId) checkSettle(s.accountId, todayISO(), '');
     save(); closeSheet(); render(); toast('Sale deleted');
   };
 }
 
 /* ----- expense ----- */
 function openExpense(id){
-  var e = id ? db.expenses.filter(function(x){return x.id===id;})[0] : null;
+  var e = id ? find(db.expenses, id) : null;
   openSheet(
     '<h3>'+(e?'Edit expense':'New expense')+'</h3>'+
-    '<label>Category</label><select id="e-cat">'+opts(CATS, e?e.category:'Supplies / Materials')+'</select>'+
+    '<label>Category</label><select id="e-cat">'+opts(EXP_CATS, e?e.category:'Supplies / Materials')+'</select>'+
     '<div class="two"><div><label>Amount ('+esc(cur())+')</label><input id="e-amt" type="number" inputmode="decimal" min="0" step="any" value="'+(e?e.amount:'')+'"></div>'+
     '<div><label>Date</label><input id="e-date" type="date" value="'+(e?e.date:todayISO())+'"></div></div>'+
     '<label>Note (optional)</label><input id="e-note" value="'+esc(e?e.note:'')+'" placeholder="e.g. 20 yards cotton fabric">'+
@@ -468,15 +840,17 @@ function openExpense(id){
 }
 
 /* ----- product ----- */
-function openProduct(id){
-  var p = id ? db.products.filter(function(x){return x.id===id;})[0] : null;
+function openProduct(id, ctx){
+  var p = id ? find(db.products, id) : null;
+  var c = p ? ctxOf(p) : ctx;
+  var costLabel = c.kind==='consignor' ? 'Pay per piece' : 'Cost';
   openSheet(
-    '<h3>'+(p?'Edit product':'New product')+'</h3>'+
+    '<h3>'+(p?'Edit product':'New product')+'</h3><div class="sub">'+esc(pathText(c))+'</div>'+
     '<label>Product name</label><input id="p-name" value="'+esc(p?p.name:'')+'" placeholder="e.g. Classic tee – cream">'+
     '<div class="two"><div><label>Size / variant</label><input id="p-size" value="'+esc(p?p.size:'')+'" placeholder="e.g. M"></div>'+
     '<div><label>In stock</label><input id="p-stock" type="number" inputmode="numeric" value="'+(p?p.stock:0)+'"></div></div>'+
-    '<div class="two"><div><label>Cost ('+esc(cur())+')</label><input id="p-cost" type="number" inputmode="decimal" min="0" step="any" value="'+(p?p.cost:'')+'"></div>'+
-    '<div><label>Selling price ('+esc(cur())+')</label><input id="p-price" type="number" inputmode="decimal" min="0" step="any" value="'+(p?p.price:'')+'"></div></div>'+
+    '<label>'+costLabel+' ('+esc(cur())+')</label><input id="p-cost" type="number" inputmode="decimal" min="0" step="any" value="'+(p?p.cost:'')+'">'+
+    (c.kind==='consignor' ? '<div class="note ok">“Pay per piece” is what you pay the consignor for each piece sold.</div>' : '')+
     '<label>Warn me when stock is at or below</label><input id="p-low" type="number" inputmode="numeric" min="0" value="'+(p?p.low:3)+'">'+
     '<div class="actions"><button class="btn" id="p-save">Save product</button>'+
     (p?'<button class="btn danger" id="p-del">Delete product</button>':'')+
@@ -487,7 +861,8 @@ function openProduct(id){
     var name=$('#p-name').value.trim();
     if(!name){ toast('Enter the product name'); return; }
     var rec = {id:p?p.id:uid(), name:name, size:$('#p-size').value.trim(), stock:Math.floor(num($('#p-stock').value)),
-      cost:num($('#p-cost').value), price:num($('#p-price').value), low:Math.max(0,Math.floor(num($('#p-low').value)))};
+      cost:num($('#p-cost').value), low:Math.max(0,Math.floor(num($('#p-low').value))),
+      kind:c.kind, gender:c.kind==='clothes'?c.gender:'', category:c.kind==='clothes'?c.cat:'', consignorId:c.kind==='consignor'?c.conId:''};
     if(p){ Object.assign(p, rec); } else { db.products.push(rec); }
     save(); closeSheet(); render(); toast('Product saved');
   };
@@ -497,6 +872,243 @@ function openProduct(id){
     save(); closeSheet(); render(); toast('Product deleted');
   };
 }
+
+/* ----- payments (receivable) ----- */
+function openPayment(id){
+  var a = find(db.accounts, id); if(!a) return;
+  var b = accBalance(a);
+  if(b.bal<=0){ toast('No balance to pay'); return; }
+  openSheet('<h3>Add payment</h3><div class="sub">'+esc(a.name)+' · balance '+money(b.bal)+'</div>'+
+    '<div class="two"><div><label>Amount ('+esc(cur())+')</label><input id="pm-amt" type="number" inputmode="decimal" min="0" step="any" value="'+b.bal+'"></div>'+
+    '<div><label>Date paid</label><input id="pm-date" type="date" value="'+todayISO()+'"></div></div>'+
+    '<label>Paid via</label><select id="pm-via">'+opts(METHODS,'Cash')+'</select>'+
+    '<div class="total"><span>Balance after this payment</span><span id="pm-after"></span></div>'+
+    '<div class="note ok" id="pm-note"></div>'+
+    '<div class="actions"><button class="btn" id="pm-save">Save payment</button><button class="btn ghost" id="pm-cancel">Cancel</button></div>');
+  function upd(){
+    var after = r2(b.bal - num($('#pm-amt').value));
+    $('#pm-after').textContent = money(Math.max(0,after));
+    $('#pm-note').innerHTML = after<=0 ? 'Balance reaches '+money(0)+', so all '+plural(b.items.length,'item')+' change to <b>Paid</b> and count in Sales on the date paid.'
+      : 'Items stay <b>Not yet paid</b> and are not counted as sales until the full balance is paid.';
+  }
+  $('#pm-amt').oninput = upd; upd();
+  $('#pm-cancel').onclick = closeSheet;
+  $('#pm-save').onclick = function(){
+    var amt = r2(num($('#pm-amt').value)), date = $('#pm-date').value||todayISO(), via = $('#pm-via').value;
+    if(amt<=0){ toast('Enter the amount'); return; }
+    if(amt>b.bal){ toast('That is more than the balance ('+money(b.bal)+')'); return; }
+    db.payments.push({id:uid(), accountId:a.id, date:date, amount:amt, via:via, settled:false});
+    var done = checkSettle(a.id, date, via);
+    save(); closeSheet(); render();
+    toast(done ? 'Fully paid – sales marked as Paid' : 'Payment saved');
+  };
+}
+
+/* ---------- click / change handlers ---------- */
+function delProducts(ids){
+  var set = {}; ids.forEach(function(i){ set[i]=1; });
+  db.products = db.products.filter(function(p){ return !set[p.id]; });
+  stSel = {};
+}
+function selIds(sel, arr){
+  return arr.filter(function(x){ return sel[x.id]; }).map(function(x){ return x.id; });
+}
+var H = {
+  mode:function(el){ nav = {mode:el.dataset.m, kind:'', gender:'', cat:'', conId:'', view:false}; stSel={}; $('#q-inv').value=''; renderInventory(); updateFab(); },
+  nav:function(el){
+    var d = el.dataset;
+    if('kind' in d) nav.kind = d.kind;
+    if('gender' in d) nav.gender = d.gender;
+    if('cat' in d) nav.cat = d.cat;
+    if('con' in d){ nav.conId = d.con; nav.kind = 'consignor'; }
+    nav.view = false; stSel = {};
+    renderInventory(); updateFab(); window.scrollTo(0,0);
+  },
+  stkback:function(){
+    if(nav.view) nav.view = false;
+    else if(nav.conId){ nav.conId=''; nav.kind=''; }
+    else if(nav.cat) nav.cat='';
+    else if(nav.gender) nav.gender='';
+    else if(nav.kind) nav.kind='';
+    stSel = {}; renderInventory(); updateFab(); window.scrollTo(0,0);
+  },
+  addprod:function(){ openProduct(null, curCtx()); },
+  viewprods:function(){ nav.view = true; stSel = {}; renderInventory(); updateFab(); window.scrollTo(0,0); },
+  editprod:function(el){ openProduct(el.dataset.id); },
+  tick:function(el,e){ e.stopPropagation(); stSel[el.dataset.id] = el.checked; renderInventory(); },
+  tickall:function(){
+    var list = db.products.filter(ctxFilter(curCtx()));
+    var all = list.every(function(p){return stSel[p.id];});
+    stSel = {}; if(!all) list.forEach(function(p){ stSel[p.id]=true; });
+    renderInventory();
+  },
+  delsel:function(){
+    var ids = selIds(stSel, db.products);
+    if(!ids.length) return;
+    if(!confirm('Delete '+plural(ids.length,'selected product')+'? Past sales records are kept.')) return;
+    delProducts(ids); save(); render(); toast('Deleted');
+  },
+  delall:function(){
+    var list = db.products.filter(ctxFilter(curCtx()));
+    if(!list.length) return;
+    if(!confirm('Delete ALL '+plural(list.length,'product')+' in “'+crumbText().split(' › ').pop()+'”? Past sales records are kept.')) return;
+    delProducts(list.map(function(p){return p.id;})); save(); render(); toast('Deleted');
+  },
+  saledetail:function(el){ openSaleDetail(el.dataset.id); },
+  editexp:function(el){ openExpense(el.dataset.id); },
+  goto:function(el){ go(el.dataset.t); },
+  /* categories */
+  addcat:function(){
+    openNameSheet('New category','','e.g. Hoodie',function(v){
+      var list = db.categories[nav.gender];
+      if(list.some(function(x){return sameName(x,v);})){ toast('That category already exists'); return false; }
+      list.push(v); save(); render(); toast('Category added');
+    });
+  },
+  catmenu:function(el,e){
+    e.stopPropagation();
+    var cn = el.dataset.cat, g = nav.gender;
+    openMenuSheet(cn,[
+      {label:'Rename category', fn:function(){
+        openNameSheet('Rename category', cn, '', function(v){
+          var list = db.categories[g];
+          if(!sameName(v,cn) && list.some(function(x){return sameName(x,v);})){ toast('That category already exists'); return false; }
+          list[list.indexOf(cn)] = v;
+          db.products.forEach(function(p){ if(p.kind==='clothes'&&p.gender===g&&p.category===cn) p.category=v; });
+          save(); render(); toast('Renamed');
+        });
+      }},
+      {label:'Delete category', cls:'danger', fn:function(){
+        var ps = db.products.filter(function(p){return p.kind==='clothes'&&p.gender===g&&p.category===cn;});
+        if(!confirm('Delete “'+cn+'”'+(ps.length?' and its '+plural(ps.length,'product'):'')+'? Past sales records are kept.')) return;
+        delProducts(ps.map(function(p){return p.id;}));
+        db.categories[g] = db.categories[g].filter(function(x){return x!==cn;});
+        save(); render(); toast('Category deleted');
+      }}
+    ]);
+  },
+  /* consignors */
+  addcon:function(){
+    openNameSheet('New consignor','','Consignor name',function(v){
+      if(db.consignors.some(function(k){return sameName(k.name,v);})){ toast('That consignor already exists'); return false; }
+      db.consignors.push({id:uid(), name:v}); save(); render(); toast('Consignor added');
+    });
+  },
+  conmenu:function(el,e){
+    e.stopPropagation();
+    var k = find(db.consignors, el.dataset.id); if(!k) return;
+    openMenuSheet(k.name,[
+      {label:'Rename consignor', fn:function(){
+        openNameSheet('Rename consignor', k.name, '', function(v){
+          if(!sameName(v,k.name) && db.consignors.some(function(x){return sameName(x.name,v);})){ toast('That consignor already exists'); return false; }
+          k.name = v;
+          db.payables.forEach(function(p){ if(p.consignorId===k.id) p.consignorName=v; });
+          save(); render(); toast('Renamed');
+        });
+      }},
+      {label:'Delete consignor', cls:'danger', fn:function(){
+        var owed = db.payables.filter(function(p){return p.consignorId===k.id && p.status==='To Pay';});
+        if(owed.length){ alert('You still owe '+k.name+' '+money(sum(owed,function(p){return p.amount;}))+' in Accounts Payable. Mark those rows Paid (or delete them) first.'); return; }
+        var ps = db.products.filter(function(p){return p.consignorId===k.id;});
+        if(!confirm('Delete “'+k.name+'”'+(ps.length?' and '+plural(ps.length,'product'):'')+'? Past sales records are kept.')) return;
+        delProducts(ps.map(function(p){return p.id;}));
+        db.consignors = db.consignors.filter(function(x){return x.id!==k.id;});
+        save(); render(); toast('Consignor deleted');
+      }}
+    ]);
+  },
+  /* payable */
+  apopen:function(el){ var id=el.dataset.id; apOpen[id]=!apOpen[id]; renderAP(); },
+  aptick:function(el,e){ e.stopPropagation(); apSel[el.dataset.id]=el.checked; renderAP(); },
+  apall:function(el){
+    var rows = db.payables.filter(function(p){return p.consignorId===el.dataset.id;});
+    var all = rows.every(function(p){return apSel[p.id];});
+    rows.forEach(function(p){ apSel[p.id] = !all; });
+    renderAP();
+  },
+  apmark:function(){
+    var ids = selIds(apSel, db.payables); if(!ids.length) return;
+    openSheet('<h3>Mark as Paid</h3><div class="sub">'+plural(ids.length,'row')+' · '+money(sum(db.payables.filter(function(p){return apSel[p.id];}),function(p){return p.amount;}))+'</div>'+
+      '<div class="two"><div><label>Date paid</label><input id="mp-date" type="date" value="'+todayISO()+'"></div>'+
+      '<div><label>Paid via</label><select id="mp-via">'+opts(METHODS,'Cash')+'</select></div></div>'+
+      '<div class="actions"><button class="btn" id="mp-save">Mark Paid</button><button class="btn ghost" id="mp-cancel">Cancel</button></div>');
+    $('#mp-cancel').onclick = closeSheet;
+    $('#mp-save').onclick = function(){
+      var date = $('#mp-date').value||todayISO(), via = $('#mp-via').value;
+      db.payables.forEach(function(p){ if(apSel[p.id]){ p.status='Paid'; p.datePaid=date; p.via=via; } });
+      apSel = {}; save(); closeSheet(); render(); toast('Marked as Paid');
+    };
+  },
+  apdelsel:function(){
+    var ids = selIds(apSel, db.payables); if(!ids.length) return;
+    if(!confirm('Delete '+plural(ids.length,'selected row')+'? This only removes the payment records here.')) return;
+    db.payables = db.payables.filter(function(p){ return ids.indexOf(p.id)<0; });
+    apSel = {}; save(); render(); toast('Deleted');
+  },
+  apdel:function(el){
+    var p = find(db.payables, el.dataset.id); if(!p) return;
+    if(!confirm('Delete this row ('+p.name+' ×'+p.qty+')?'+(p.status==='To Pay'?' You will no longer see it as owed.':''))) return;
+    db.payables = db.payables.filter(function(x){return x.id!==p.id;});
+    delete apSel[p.id]; save(); render(); toast('Deleted');
+  },
+  /* receivable */
+  addacc:function(){
+    openNameSheet('New account name','','Customer name',function(v){
+      if(db.accounts.some(function(a){return sameName(a.name,v);})){ toast('That account already exists'); return false; }
+      db.accounts.push({id:uid(), name:v}); save(); render(); toast('Account added');
+    });
+  },
+  accview:function(el){ accId = el.dataset.id; go('acc'); },
+  accmenu:function(el,e){
+    e.stopPropagation();
+    var a = find(db.accounts, el.dataset.id); if(!a) return;
+    openMenuSheet(a.name,[
+      {label:'Rename account', fn:function(){
+        openNameSheet('Rename account', a.name, '', function(v){
+          if(!sameName(v,a.name) && db.accounts.some(function(x){return sameName(x.name,v);})){ toast('That account already exists'); return false; }
+          a.name = v; db.sales.forEach(function(s){ if(s.accountId===a.id) s.accountName=v; });
+          save(); render(); toast('Renamed');
+        });
+      }},
+      {label:'Delete account', cls:'danger', fn:function(){
+        var b = accBalance(a);
+        if(b.items.length){ alert(a.name+' still has '+money(b.bal)+' unpaid ('+plural(b.items.length,'item')+'). Collect the payment (or delete those sales) before deleting this account.'); return; }
+        if(!confirm('Delete account “'+a.name+'”? Its paid sales stay in your records.')) return;
+        db.accounts = db.accounts.filter(function(x){return x.id!==a.id;});
+        db.payments = db.payments.filter(function(x){return x.accountId!==a.id;});
+        save(); render(); toast('Account deleted');
+      }}
+    ]);
+  },
+  addpay:function(el){ openPayment(el.dataset.id); },
+  delpay:function(el){
+    var p = find(db.payments, el.dataset.id); if(!p) return;
+    if(!confirm('Remove this '+money(p.amount)+' payment?')) return;
+    db.payments = db.payments.filter(function(x){return x.id!==p.id;});
+    save(); render(); toast('Payment removed');
+  }
+};
+document.addEventListener('click', function(e){
+  var el = e.target.closest('[data-act]');
+  if(!el) return;
+  var f = H[el.dataset.act];
+  if(f) f(el, e);
+});
+var CH = {
+  apstatus:function(el){
+    var p = find(db.payables, el.dataset.id); if(!p) return;
+    p.status = el.value;
+    if(p.status==='Paid'){ p.datePaid = p.datePaid || todayISO(); p.via = p.via || 'Cash'; }
+    else { p.datePaid = ''; p.via = ''; }
+    save(); render();
+  },
+  apdate:function(el){ var p=find(db.payables, el.dataset.id); if(p){ p.datePaid = el.value; save(); } },
+  apvia:function(el){ var p=find(db.payables, el.dataset.id); if(p){ p.via = el.value; save(); } }
+};
+document.addEventListener('change', function(e){
+  var el = e.target.closest('[data-chg]');
+  if(el && CH[el.dataset.chg]) CH[el.dataset.chg](el);
+});
 
 /* ---------- backup / export ---------- */
 function download(name, text, type){
@@ -520,14 +1132,14 @@ $('#f-import').onchange=function(){
       var d=JSON.parse(r.result);
       if(!d.products||!d.sales||!d.expenses) throw 0;
       if(!confirm('Replace everything on this phone with the backup?')) return;
-      db=d; db.settings=db.settings||{currency:'₱'}; save(); render(); toast('Backup restored');
+      db=migrate(d); save(); render(); toast('Backup restored');
     }catch(e){ toast('That file is not a valid backup'); }
   };
   r.readAsText(f); this.value='';
 };
 $('#b-csv-sales').onclick=function(){
-  var rows=[['Date','Item','Qty','Price each','Total','Profit','Paid via','Note']];
-  sortDesc(db.sales).forEach(function(s){ rows.push([s.date,s.name,s.qty,s.price,saleTotal(s),saleProfit(s),s.method,s.note]); });
+  var rows=[['Date','Item','Qty','Price each','Total','Profit','Paid via','Status','Account','Note']];
+  sortDesc(db.sales).forEach(function(s){ rows.push([s.date,s.name,s.qty,s.price,saleTotal(s),saleProfit(s),s.method,s.status==='unpaid'?'Not yet paid':'Paid',s.accountName,s.note]); });
   download('anyday-sales-'+todayISO()+'.csv', rows.map(function(r){return r.map(csvCell).join(',');}).join('\n'), 'text/csv');
 };
 $('#b-csv-exp').onclick=function(){
@@ -537,9 +1149,9 @@ $('#b-csv-exp').onclick=function(){
 };
 $('#cur').oninput=function(){ db.settings.currency=this.value||'₱'; save(); };
 $('#b-clear').onclick=function(){
-  if(!confirm('Erase ALL sales, expenses and products from this phone?')) return;
+  if(!confirm('Erase ALL sales, expenses, stock, accounts and consignors from this phone?')) return;
   if(!confirm('This cannot be undone unless you saved a backup. Erase everything?')) return;
-  db=blank(); save(); render(); toast('All data erased');
+  db=blank(); save(); nav={mode:'my',kind:'',gender:'',cat:'',conId:'',view:false}; render(); toast('All data erased');
 };
 
 /* ---------- start ---------- */

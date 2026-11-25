@@ -1,13 +1,10 @@
-ANYDAY APPAREL TRACKER - free, private, works offline
+ANYDAY APPAREL TRACKER v2 - free, private, works offline
 
-HOST IT FREE (pick one):
- A) Netlify Drop: go to app.netlify.com/drop, drag this whole folder in. You get a free link.
- B) Cloudflare Pages or GitHub Pages: upload these files to a new project.
+UPDATE ON GITHUB (computer):
+ 1. Unzip this file.
+ 2. Open your repository > Add file > Upload files.
+ 3. Drag in the CONTENTS: index.html, sw.js, manifest.json and the icons folder.
+ 4. Commit changes, wait 1-2 minutes.
+ 5. On your phone, open the app, close it fully, open it again (once more if it still looks old).
 
-INSTALL ON ANDROID:
- 1. Open your link in Chrome on your phone.
- 2. Tap the 3-dot menu > "Install app" (or "Add to Home screen").
- 3. Open it from your home screen. It works offline after the first load.
-
-YOUR DATA stays on your phone only. Use More > "Save backup file" regularly.
-If you edit any file later, change CACHE = 'anyday-v1' to 'anyday-v2' in sw.js so phones update.
+Your saved data is kept. Save a backup first: More > Save backup file.
