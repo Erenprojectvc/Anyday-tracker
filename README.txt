@@ -1,4 +1,4 @@
-ANYDAY APPAREL TRACKER v2 - free, private, works offline
+ANYDAY APPAREL TRACKER v4 - free, private, works offline
 
 UPDATE ON GITHUB (computer):
  1. Unzip this file.

@@ -1,6 +1,6 @@
 // Offline support: cache the app files so it opens without internet.
 // Bump CACHE when you change any file so phones pick up the update.
-const CACHE = 'anyday-v3';
+const CACHE = 'anyday-v4';
 const FILES = [
   './',
   './index.html',
